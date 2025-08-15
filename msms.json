@@ -1,0 +1,22 @@
+{
+    "students": [
+        {
+            "id": 1,
+            "name": "lim",
+            "enrolled_in": [
+                "2001"
+            ]
+        },
+        {
+            "id": 2,
+            "name": "xue en",
+            "enrolled_in": [
+                "55"
+            ]
+        }
+    ],
+    "teachers": [],
+    "attendance": [],
+    "next_student_id": 1,
+    "next_teacher_id": 1
+}
