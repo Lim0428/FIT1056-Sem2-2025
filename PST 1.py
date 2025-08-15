@@ -89,7 +89,7 @@ def find_teachers(term):
     results = []
     for teacher in teacher_db:
         if term.lower() in teacher.name.lower() or term.lower() in teacher.speciality.lower():
-            results.appedn(teacher)
+            results.append(teacher)
     if not results:
         print("No match found.")
     else:
