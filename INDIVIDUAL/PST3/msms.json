@@ -1,0 +1,315 @@
+<<<<<<< HEAD
+{
+    "students": [
+        {
+            "id": 1,
+            "name": "lim",
+            "enrolled_in": [
+                "2001"
+            ]
+        },
+        {
+            "id": 2,
+            "name": "xue en",
+            "enrolled_in": [
+                "55"
+            ]
+        }
+    ],
+    "teachers": [],
+    "attendance": [],
+    "next_student_id": 1,
+    "next_teacher_id": 1
+=======
+{
+    "students": [
+        {
+            "id": 1,
+            "name": "Alice Johnson",
+            "enrolled_course_ids": [
+                103,
+                102,
+                101
+            ],
+            "balance": 33900.0,
+            "payments": [
+                {
+                    "amount": 1000.0,
+                    "timestamp": "2025-08-30T00:40:19.933465",
+                    "note": ""
+                },
+                {
+                    "amount": 100.0,
+                    "timestamp": "2025-09-02T00:33:36.981183",
+                    "note": "4"
+                },
+                {
+                    "amount": 10000.0,
+                    "timestamp": "2025-09-07T02:05:19.789847",
+                    "note": ""
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Bob Williams",
+            "enrolled_course_ids": [
+                102
+            ],
+            "balance": 0.0,
+            "payments": []
+        }
+    ],
+    "teachers": [
+        {
+            "id": 1,
+            "name": "Dr. Evelyn Keys",
+            "speciality": "Piano"
+        },
+        {
+            "id": 2,
+            "name": "Mr. David Fret",
+            "speciality": "Guitar"
+        }
+    ],
+    "courses": [
+        {
+            "id": 101,
+            "name": "Beginner Piano",
+            "instrument": "Piano",
+            "teacher_id": 1,
+            "enrolled_student_ids": [
+                1
+            ],
+            "lessons": [
+                {
+                    "lesson_id": 1,
+                    "day": "Monday",
+                    "start_time": "16:00",
+                    "room": "Room A",
+                    "cancelled": true
+                },
+                {
+                    "lesson_id": 2,
+                    "day": "Wednesday",
+                    "start_time": "16:00",
+                    "room": "Room A",
+                    "cancelled": false
+                },
+                {
+                    "lesson_id": 4,
+                    "day": "1",
+                    "start_time": "10.10",
+                    "room": "6",
+                    "cancelled": false
+                },
+                {
+                    "lesson_id": 5,
+                    "day": "monday",
+                    "start_time": "10.01",
+                    "room": "3",
+                    "cancelled": false
+                }
+            ],
+            "fee": 45000.0
+        },
+        {
+            "id": 102,
+            "name": "Acoustic Guitar Fundamentals",
+            "instrument": "Guitar",
+            "teacher_id": 2,
+            "enrolled_student_ids": [
+                2,
+                1
+            ],
+            "lessons": [
+                {
+                    "lesson_id": 3,
+                    "day": "Tuesday",
+                    "start_time": "17:00",
+                    "room": "Room C",
+                    "cancelled": false
+                }
+            ],
+            "fee": 0.0
+        },
+        {
+            "id": 103,
+            "name": "Intermediate Piano",
+            "instrument": "Piano",
+            "teacher_id": 1,
+            "enrolled_student_ids": [
+                1
+            ],
+            "lessons": [],
+            "fee": 0.0
+        }
+    ],
+    "attendance": [
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-07-14T15:58:30.123456"
+        },
+        {
+            "student_id": 2,
+            "course_id": 102,
+            "timestamp": "2025-07-14T16:02:45.654321"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-08-29T16:22:32.752583"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-08-29T16:47:25.431218"
+        },
+        {
+            "student_id": 1,
+            "course_id": 102,
+            "timestamp": "2025-08-30T00:49:57.044751"
+        },
+        {
+            "student_id": 1,
+            "course_id": 102,
+            "timestamp": "2025-09-01T23:36:00.367716"
+        },
+        {
+            "student_id": 1,
+            "course_id": 103,
+            "timestamp": "2025-09-01T23:52:54.144782"
+        },
+        {
+            "student_id": 1,
+            "course_id": 102,
+            "timestamp": "2025-09-01T23:53:04.418524"
+        },
+        {
+            "student_id": 1,
+            "course_id": 102,
+            "timestamp": "2025-09-01T23:54:00.834738"
+        },
+        {
+            "student_id": 1,
+            "course_id": 103,
+            "timestamp": "2025-09-02T00:39:28.444486"
+        },
+        {
+            "student_id": 1,
+            "course_id": 102,
+            "timestamp": "2025-09-03T01:17:36.571094"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-09-07T02:02:42.467216"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-09-07T19:56:12.818585"
+        },
+        {
+            "student_id": 1,
+            "course_id": 102,
+            "timestamp": "2025-09-07T19:56:20.203701"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-09-07T19:56:32.783796"
+        }
+    ],
+    "feedbacks": [
+        {
+            "teacher_id": 1,
+            "course_id": 101,
+            "feedback": "good job"
+        },
+        {
+            "student_id": 1,
+            "course_id": 102,
+            "comment": "jnhbb",
+            "timestamp": "2025-09-01T23:54:28.492224"
+        },
+        {
+            "student_id": 1,
+            "course_id": 102,
+            "comment": "good",
+            "timestamp": "2025-09-02T00:38:24.904133"
+        },
+        {
+            "student_id": 1,
+            "course_id": 103,
+            "comment": "lose",
+            "timestamp": "2025-09-02T00:39:15.478936"
+        }
+    ],
+    "grades": [
+        {
+            "teacher_id": 1,
+            "student_id": 1,
+            "course_id": 101,
+            "grade": "A",
+            "note": "good boy",
+            "timestamp": "2025-08-30T01:25:20.577794"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "grade": "v"
+        },
+        {
+            "teacher_id": 1,
+            "student_id": 1,
+            "course_id": 101,
+            "grade": "k",
+            "note": "noob",
+            "timestamp": "2025-09-01T23:37:50.166342"
+        },
+        {
+            "teacher_id": 1,
+            "student_id": 1,
+            "course_id": 101,
+            "grade": "l",
+            "note": "p",
+            "timestamp": "2025-09-03T02:36:51.971567"
+        },
+        {
+            "teacher_id": 1,
+            "student_id": 1,
+            "course_id": 101,
+            "grade": "e",
+            "note": "e",
+            "timestamp": "2025-09-03T02:43:23.768806"
+        },
+        {
+            "teacher_id": 1,
+            "student_id": 1,
+            "course_id": 101,
+            "grade": "r",
+            "note": "s",
+            "timestamp": "2025-09-03T02:44:55.140884"
+        },
+        {
+            "teacher_id": 1,
+            "student_id": 1,
+            "course_id": 101,
+            "grade": "C",
+            "note": "rubbish",
+            "timestamp": "2025-09-07T01:59:40.073530"
+        }
+    ],
+    "lesson_changes": [
+        {
+            "action": "cancel",
+            "course_id": 101,
+            "lesson_id": 1,
+            "reason": "damn",
+            "timestamp": "2025-09-07T02:02:25.991714"
+        }
+    ]
+>>>>>>> 8282bed (First commit to PST 3)
+}
