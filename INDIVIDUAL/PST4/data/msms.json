@@ -1,0 +1,606 @@
+{
+    "students": [
+        {
+            "id": 1,
+            "name": "Alice Johnson",
+            "enrolled_course_ids": [
+                101,
+                103
+            ],
+            "balance": 0.0,
+            "payments": [],
+            "instrument": "N/A"
+        },
+        {
+            "id": 2,
+            "name": "Bob Williams",
+            "enrolled_course_ids": [
+                102
+            ],
+            "balance": -12000.0,
+            "payments": [
+                {
+                    "amount": 12000.0,
+                    "timestamp": "2025-09-28T15:46:24.716224",
+                    "note": ""
+                }
+            ],
+            "instrument": "N/A"
+        },
+        {
+            "id": 3,
+            "name": "Lim Guo Zhan",
+            "enrolled_course_ids": [],
+            "balance": -15000.0,
+            "payments": [
+                {
+                    "amount": 15000.0,
+                    "timestamp": "2025-09-27T21:54:35.375684",
+                    "note": "semester 1"
+                }
+            ],
+            "instrument": "Guitar"
+        },
+        {
+            "id": 4,
+            "name": "Liaw Zi Shen",
+            "enrolled_course_ids": [],
+            "balance": -1000.0,
+            "payments": [
+                {
+                    "amount": 1000.0,
+                    "timestamp": "2025-09-28T18:24:07.674010",
+                    "note": ""
+                }
+            ],
+            "instrument": "Piano"
+        },
+        {
+            "id": 5,
+            "name": "Chong Xue En",
+            "enrolled_course_ids": [],
+            "balance": 0.0,
+            "payments": [],
+            "instrument": "guitar"
+        }
+    ],
+    "teachers": [
+        {
+            "id": 1,
+            "name": "Dr. Evelyn Keys",
+            "speciality": "Piano"
+        },
+        {
+            "id": 2,
+            "name": "Mr. David Fret",
+            "speciality": "Guitar"
+        },
+        {
+            "id": 3,
+            "name": "Lim Guo Zhan",
+            "speciality": "Violin"
+        },
+        {
+            "id": 4,
+            "name": "Leong ",
+            "speciality": "Piano"
+        }
+    ],
+    "courses": [
+        {
+            "id": 101,
+            "name": "Beginner Piano",
+            "instrument": "Piano",
+            "teacher_id": 1,
+            "enrolled_student_ids": [
+                1
+            ],
+            "lessons": [
+                {
+                    "lesson_id": 1,
+                    "day": "Monday",
+                    "start_time": "00:00",
+                    "room": "Room B",
+                    "cancelled": true
+                },
+                {
+                    "lesson_id": 2,
+                    "day": "Tuesday",
+                    "start_time": "10:00",
+                    "room": "202",
+                    "cancelled": false
+                },
+                {
+                    "lesson_id": 3,
+                    "day": "Friday",
+                    "start_time": "14:00",
+                    "room": "Room F",
+                    "cancelled": false
+                },
+                {
+                    "lesson_id": 4,
+                    "day": "Saturday",
+                    "start_time": "01:00",
+                    "room": "Room k",
+                    "cancelled": false
+                },
+                {
+                    "lesson_id": 5,
+                    "day": "Tuesday",
+                    "start_time": "12:00",
+                    "room": "Room A",
+                    "cancelled": false
+                }
+            ],
+            "fee": 15000.0
+        },
+        {
+            "id": 102,
+            "name": "Acoustic Guitar Fundamentals",
+            "instrument": "Guitar",
+            "teacher_id": 2,
+            "enrolled_student_ids": [
+                2
+            ],
+            "lessons": [
+                {
+                    "lesson_id": 3,
+                    "day": "Wednesday",
+                    "start_time": "16:00",
+                    "room": "201",
+                    "cancelled": false
+                },
+                {
+                    "lesson_id": 2,
+                    "day": "Sunday",
+                    "start_time": "19:00",
+                    "room": "Room C",
+                    "cancelled": false
+                }
+            ],
+            "fee": 40000.0
+        },
+        {
+            "id": 103,
+            "name": "Intermediate Piano",
+            "instrument": "Piano",
+            "teacher_id": 1,
+            "enrolled_student_ids": [
+                1
+            ],
+            "lessons": [],
+            "fee": 50000.0
+        },
+        {
+            "id": 104,
+            "name": "jjjj",
+            "instrument": "phhh",
+            "teacher_id": 1,
+            "enrolled_student_ids": [],
+            "lessons": [
+                {
+                    "lesson_id": 1,
+                    "day": "Friday",
+                    "start_time": "19:00",
+                    "room": "Room C",
+                    "cancelled": false
+                }
+            ],
+            "fee": 0.0
+        }
+    ],
+    "attendance": [
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-07-14T15:58:30.123456"
+        },
+        {
+            "student_id": 2,
+            "course_id": 102,
+            "timestamp": "2025-07-14T16:02:45.654321"
+        },
+        {
+            "student_id": 3,
+            "course_id": 101,
+            "timestamp": "2025-09-27T21:39:06.125775"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-09-27T21:54:06.420622"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-09-27T21:54:12.092041"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-09-27T21:55:14.087350"
+        },
+        {
+            "student_id": 3,
+            "course_id": 101,
+            "timestamp": "2025-09-27T21:55:28.538029"
+        },
+        {
+            "student_id": 3,
+            "course_id": 103,
+            "timestamp": "2025-09-27T21:55:33.167669"
+        },
+        {
+            "student_id": 3,
+            "course_id": 102,
+            "timestamp": "2025-09-28T13:54:00.907114"
+        },
+        {
+            "student_id": 3,
+            "course_id": 101,
+            "timestamp": "2025-09-28T13:55:44.590052"
+        },
+        {
+            "student_id": 2,
+            "course_id": 101,
+            "timestamp": "2025-09-28T13:55:48.715211"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-09-28T13:55:53.448458"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-09-28T13:59:25.302929"
+        },
+        {
+            "student_id": 3,
+            "course_id": 101,
+            "timestamp": "2025-09-28T13:59:33.979224"
+        },
+        {
+            "student_id": 3,
+            "course_id": 102,
+            "timestamp": "2025-09-28T13:59:37.006925"
+        },
+        {
+            "student_id": 3,
+            "course_id": 102,
+            "timestamp": "2025-09-28T13:59:38.034320"
+        },
+        {
+            "student_id": 1,
+            "course_id": 102,
+            "timestamp": "2025-09-28T13:59:40.591048"
+        },
+        {
+            "student_id": 2,
+            "course_id": 102,
+            "timestamp": "2025-09-28T13:59:43.790104"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-09-28T15:46:34.834644"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-09-28T17:52:30.786299"
+        },
+        {
+            "student_id": 3,
+            "course_id": 101,
+            "timestamp": "2025-09-28T17:52:34.695911"
+        },
+        {
+            "student_id": 3,
+            "course_id": 103,
+            "timestamp": "2025-09-28T17:52:36.978446"
+        },
+        {
+            "student_id": 4,
+            "course_id": 101,
+            "timestamp": "2025-09-28T18:24:15.552791"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-09-28T18:48:41.736612"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-09-28T18:59:29.199007"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-09-28T18:59:30.316728"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-09-28T18:59:30.480281"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-09-28T18:59:30.690063"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-09-28T18:59:30.877468"
+        },
+        {
+            "student_id": 3,
+            "course_id": 101,
+            "timestamp": "2025-09-28T18:59:35.364149"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-09-28T18:59:38.725980"
+        },
+        {
+            "student_id": 2,
+            "course_id": 101,
+            "timestamp": "2025-09-28T18:59:40.757819"
+        },
+        {
+            "student_id": 4,
+            "course_id": 101,
+            "timestamp": "2025-09-28T18:59:43.578186"
+        },
+        {
+            "student_id": 5,
+            "course_id": 101,
+            "timestamp": "2025-09-28T18:59:46.730137"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-09-28T19:01:15.127770"
+        },
+        {
+            "student_id": 1,
+            "course_id": 102,
+            "timestamp": "2025-09-28T19:01:19.626785"
+        },
+        {
+            "student_id": 1,
+            "course_id": 103,
+            "timestamp": "2025-09-28T19:01:22.753886"
+        },
+        {
+            "student_id": 2,
+            "course_id": 103,
+            "timestamp": "2025-09-28T19:01:29.651338"
+        },
+        {
+            "student_id": 2,
+            "course_id": 102,
+            "timestamp": "2025-09-28T19:01:32.230029"
+        },
+        {
+            "student_id": 2,
+            "course_id": 101,
+            "timestamp": "2025-09-28T19:01:35.102393"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-09-28T19:06:17.609899"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-09-28T19:06:21.403686"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-09-28T19:06:32.712139"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-09-28T19:06:37.005145"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-09-28T19:06:41.473983"
+        },
+        {
+            "student_id": 3,
+            "course_id": 104,
+            "timestamp": "2025-09-28T19:07:18.553268"
+        },
+        {
+            "student_id": 3,
+            "course_id": 104,
+            "timestamp": "2025-09-28T19:07:21.750951"
+        },
+        {
+            "student_id": 3,
+            "course_id": 104,
+            "timestamp": "2025-09-28T19:09:56.649747"
+        },
+        {
+            "student_id": 3,
+            "course_id": 104,
+            "timestamp": "2025-09-28T19:09:57.929736"
+        },
+        {
+            "student_id": 3,
+            "course_id": 104,
+            "timestamp": "2025-09-28T19:09:58.090909"
+        },
+        {
+            "student_id": 3,
+            "course_id": 104,
+            "timestamp": "2025-09-28T19:09:58.289115"
+        },
+        {
+            "student_id": 3,
+            "course_id": 104,
+            "timestamp": "2025-09-28T19:09:58.480306"
+        },
+        {
+            "student_id": 3,
+            "course_id": 104,
+            "timestamp": "2025-09-28T19:09:58.654385"
+        },
+        {
+            "student_id": 3,
+            "course_id": 104,
+            "timestamp": "2025-09-28T19:09:58.830357"
+        },
+        {
+            "student_id": 3,
+            "course_id": 104,
+            "timestamp": "2025-09-28T19:09:58.996104"
+        },
+        {
+            "student_id": 3,
+            "course_id": 104,
+            "timestamp": "2025-09-28T19:09:59.208120"
+        },
+        {
+            "student_id": 3,
+            "course_id": 104,
+            "timestamp": "2025-09-28T19:10:28.096697"
+        },
+        {
+            "student_id": 3,
+            "course_id": 104,
+            "timestamp": "2025-09-28T19:12:22.502081"
+        }
+    ],
+    "feedbacks": [
+        {
+            "student_id": 3,
+            "course_id": 101,
+            "comment": "Teacher is good!\n",
+            "timestamp": "2025-09-28T13:56:17.031214"
+        },
+        {
+            "student_id": 1,
+            "course_id": 102,
+            "comment": "good morning\n",
+            "timestamp": "2025-09-28T16:20:21.676999"
+        },
+        {
+            "student_id": 2,
+            "course_id": 101,
+            "comment": "enhance more",
+            "timestamp": "2025-09-28T17:02:50.503245"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "comment": "Lose",
+            "timestamp": "2025-09-28T18:24:35.695672"
+        }
+    ],
+    "grades": [
+        {
+            "teacher_id": 2,
+            "student_id": 2,
+            "course_id": 102,
+            "grade": "A",
+            "note": "Excellent. Keep going",
+            "timestamp": "2025-09-28T13:57:09.196834"
+        },
+        {
+            "teacher_id": 1,
+            "student_id": 3,
+            "course_id": 101,
+            "grade": "B",
+            "note": "",
+            "timestamp": "2025-09-28T15:32:08.213126"
+        },
+        {
+            "teacher_id": 1,
+            "student_id": 1,
+            "course_id": 101,
+            "grade": "A",
+            "note": "good",
+            "timestamp": "2025-09-28T17:50:02.329053"
+        },
+        {
+            "teacher_id": 1,
+            "student_id": 3,
+            "course_id": 101,
+            "grade": "A",
+            "note": "very good",
+            "timestamp": "2025-09-28T17:52:22.015092"
+        },
+        {
+            "teacher_id": 1,
+            "student_id": 4,
+            "course_id": 101,
+            "grade": "A",
+            "note": "",
+            "timestamp": "2025-09-28T18:24:25.324119"
+        }
+    ],
+    "lesson_changes": [
+        {
+            "action": "reschedule",
+            "course_id": 101,
+            "lesson_id": 1,
+            "new_day": "Monday",
+            "new_time": "20:00",
+            "new_room": "202",
+            "timestamp": "2025-09-28T13:57:57.033989"
+        },
+        {
+            "action": "reschedule",
+            "course_id": 102,
+            "lesson_id": 3,
+            "new_day": "Wednesday",
+            "new_time": "16:00",
+            "new_room": "201",
+            "timestamp": "2025-09-28T13:58:59.737827"
+        },
+        {
+            "action": "cancel",
+            "course_id": 101,
+            "lesson_id": 1,
+            "reason": "no class",
+            "timestamp": "2025-09-28T17:03:03.440761"
+        },
+        {
+            "action": "reschedule",
+            "course_id": 101,
+            "lesson_id": 1,
+            "new_day": "Tuesday",
+            "new_time": "10:00",
+            "new_room": "3",
+            "timestamp": "2025-09-28T17:03:25.289870"
+        },
+        {
+            "action": "reschedule",
+            "course_id": 101,
+            "lesson_id": 2,
+            "new_day": "Tuesday",
+            "new_time": "10:00",
+            "new_room": "202",
+            "timestamp": "2025-09-28T17:19:33.441264"
+        },
+        {
+            "action": "reschedule",
+            "course_id": 101,
+            "lesson_id": 1,
+            "new_day": "Monday",
+            "new_time": "00:00",
+            "new_room": "Room B",
+            "timestamp": "2025-09-28T17:20:06.412785"
+        }
+    ]
+}

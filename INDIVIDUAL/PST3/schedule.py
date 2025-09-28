@@ -1,4 +1,4 @@
-import json
+import json, os, datetime
 from student import StudentUser
 from teacher import TeacherUser, Course
 
@@ -159,20 +159,6 @@ class ScheduleManager:
         student.balance += course.fee
         self._save_data()
         print(f"{student.name} enrolled to {course.name}. Fee: {course.fee}")
-
-    # moves a student from one course to another while keeping data consisten
-    def switch_course(self,student_id,from_cid,to_cid):
-        student=self.find_student_by_id(student_id)
-        from_course=self.find_course_by_id(from_cid)
-        to_course=self.find_course_by_id(to_cid)
-        if not student or not from_course or not to_course: return
-        if from_cid not in student.enrolled_course_ids:
-            print("Student not enrolled in the original course.")
-            return
-        student.enrolled_course_ids.remove(from_cid)
-        if student.id in from_course.enrolled_student_ids:
-            from_course.enrolled_student_ids.remove(student.id)
-        self.enroll_student(student.id,to_course.id)
 
     # function to update course fee
     def set_course_fee(self,cid,fee):
