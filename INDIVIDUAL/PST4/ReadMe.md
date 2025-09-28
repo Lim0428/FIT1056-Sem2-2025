@@ -20,7 +20,6 @@ The system covers management of:
 * **Check in for lessons** to mark attendance for enrolled courses.
 * **Submit feedback** for their courses.
 * **View grades** with optional notes from teachers.
-* **View enrolled courses**.
 
 ### **Teachers**
 
@@ -96,7 +95,7 @@ msms/
 ├─ data/
 │  └─ msms.json
 ├─ main.py
-
+└─ ReadMe.md
 ```
 
 4. Navigate the dashboard to manage students, teachers, courses, attendance, feedback, grades, and payments.
