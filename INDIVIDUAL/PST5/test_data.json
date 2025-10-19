@@ -1,0 +1,40 @@
+{
+    "students": [],
+    "teachers": [],
+    "courses": [
+        {
+            "id": 101,
+            "name": "Piano 201",
+            "instrument": "Piano",
+            "teacher_id": 4,
+            "enrolled_student_ids": [],
+            "lessons": [
+                {
+                    "lesson_id": 1,
+                    "day": "Thursday",
+                    "start_time": "11:15",
+                    "room": "B3",
+                    "cancelled": false
+                }
+            ],
+            "fee": 0.0
+        }
+    ],
+    "attendance": [],
+    "feedbacks": [],
+    "grades": [],
+    "lesson_changes": [
+        {
+            "action": "reschedule",
+            "course_id": 101,
+            "lesson_id": 1,
+            "new_day": "Thursday",
+            "new_time": "11:15",
+            "new_room": "B3",
+            "timestamp": "2025-10-19T23:37:23.496539"
+        }
+    ],
+    "finance_log": [],
+    "credentials": {},
+    "next_lesson_id": 2
+}

@@ -1,0 +1,284 @@
+{
+    "students": [
+        {
+            "id": 1,
+            "name": "Alice Johnson",
+            "enrolled_course_ids": [
+                101,
+                103
+            ],
+            "balance": -150000.01,
+            "payments": [
+                {
+                    "amount": 0.01,
+                    "method": "Cash",
+                    "timestamp": "2025-10-14T09:15:16"
+                },
+                {
+                    "amount": 150000.0,
+                    "method": "Cash",
+                    "timestamp": "2025-10-14T16:04:55"
+                }
+            ],
+            "instrument": "N/A"
+        },
+        {
+            "id": 2,
+            "name": "Bob Williams",
+            "enrolled_course_ids": [
+                102
+            ],
+            "balance": -1000.0,
+            "payments": [
+                {
+                    "amount": 1000.0,
+                    "method": "E-Wallet",
+                    "timestamp": "2025-10-14T19:39:38"
+                }
+            ],
+            "instrument": "N/A"
+        },
+        {
+            "id": 3,
+            "name": "Lim Guo Zhan",
+            "enrolled_course_ids": [
+                101,
+                102,
+                103
+            ],
+            "balance": 0.0,
+            "payments": [],
+            "instrument": "Guitar"
+        },
+        {
+            "id": 4,
+            "name": "Liaw Zi Shen",
+            "enrolled_course_ids": [
+                104
+            ],
+            "balance": 6000.0,
+            "payments": [],
+            "instrument": "Violin"
+        }
+    ],
+    "teachers": [
+        {
+            "id": 1,
+            "name": "Dr. Evelyn Keys",
+            "speciality": "Piano"
+        },
+        {
+            "id": 2,
+            "name": "Mr. David Fret",
+            "speciality": "Guitar"
+        }
+    ],
+    "courses": [
+        {
+            "id": 101,
+            "name": "Beginner Piano",
+            "instrument": "Piano",
+            "teacher_id": 1,
+            "enrolled_student_ids": [
+                1,
+                3
+            ],
+            "lessons": [
+                {
+                    "lesson_id": 1,
+                    "day": "Monday",
+                    "start_time": "16:00",
+                    "room": "Room A",
+                    "cancelled": true
+                },
+                {
+                    "lesson_id": 2,
+                    "day": "Wednesday",
+                    "start_time": "16:00",
+                    "room": "Room A",
+                    "cancelled": false
+                },
+                {
+                    "lesson_id": 3,
+                    "day": "Sunday",
+                    "start_time": "15:00",
+                    "room": "Room A",
+                    "cancelled": true
+                },
+                {
+                    "lesson_id": 4,
+                    "day": "tuesday",
+                    "start_time": "12:00",
+                    "room": "a",
+                    "cancelled": false
+                }
+            ],
+            "fee": 0.0
+        },
+        {
+            "id": 102,
+            "name": "Acoustic Guitar Fundamentals",
+            "instrument": "Guitar",
+            "teacher_id": 2,
+            "enrolled_student_ids": [
+                2,
+                3
+            ],
+            "lessons": [
+                {
+                    "lesson_id": 5,
+                    "day": "Tuesday",
+                    "start_time": "17:00",
+                    "room": "Room C",
+                    "cancelled": false
+                }
+            ],
+            "fee": 0.0
+        },
+        {
+            "id": 103,
+            "name": "Intermediate Piano",
+            "instrument": "Piano",
+            "teacher_id": 1,
+            "enrolled_student_ids": [
+                1,
+                3
+            ],
+            "lessons": [],
+            "fee": 0.0
+        },
+        {
+            "id": 104,
+            "name": "Violin Performance and Technique",
+            "instrument": "Violin",
+            "teacher_id": 2,
+            "enrolled_student_ids": [
+                4
+            ],
+            "lessons": [],
+            "fee": 6000.0
+        }
+    ],
+    "attendance": [
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-07-14T15:58:30.123456"
+        },
+        {
+            "student_id": 2,
+            "course_id": 102,
+            "timestamp": "2025-07-14T16:02:45.654321"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-10-14T09:56:23.637511"
+        },
+        {
+            "student_id": 1,
+            "course_id": 103,
+            "timestamp": "2025-10-14T09:56:29.380638"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-10-14T09:57:10.293607"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-10-14T19:22:41.687312"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-10-19T13:55:18.707159"
+        },
+        {
+            "student_id": 1,
+            "course_id": 103,
+            "timestamp": "2025-10-19T13:56:58.243419"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-10-19T13:57:44.042302"
+        },
+        {
+            "student_id": 1,
+            "course_id": 101,
+            "timestamp": "2025-10-19T14:06:35.315892"
+        },
+        {
+            "student_id": 1,
+            "course_id": 103,
+            "timestamp": "2025-10-19T14:06:39.956818"
+        },
+        {
+            "student_id": 1,
+            "course_id": 103,
+            "timestamp": "2025-10-19T14:06:44.041047"
+        }
+    ],
+    "feedbacks": [],
+    "grades": [
+        {
+            "teacher_id": 1,
+            "student_id": 1,
+            "course_id": 101,
+            "grade": "A",
+            "note": "goodjob!!!\n",
+            "timestamp": "2025-10-14T19:13:10.252547"
+        }
+    ],
+    "lesson_changes": [],
+    "finance_log": [
+        {
+            "student_id": 1,
+            "student_name": "Alice Johnson",
+            "amount": 0.01,
+            "method": "Cash",
+            "timestamp": "2025-10-14T09:15:16"
+        },
+        {
+            "student_id": 1,
+            "student_name": "Alice Johnson",
+            "amount": 150000.0,
+            "method": "Cash",
+            "timestamp": "2025-10-14T16:04:55"
+        },
+        {
+            "student_id": 2,
+            "student_name": "Bob Williams",
+            "amount": 1000.0,
+            "method": "E-Wallet",
+            "timestamp": "2025-10-14T19:39:38"
+        }
+    ],
+    "credentials": {
+        "receptionist:r001": {
+            "password": "1234"
+        },
+        "schedule_manager:s001": {
+            "password": "1234"
+        },
+        "student:1": {
+            "password": "1234",
+            "failed_attempts": 0,
+            "lock_until": "2025-10-19T15:49:58"
+        },
+        "teacher:1": {
+            "password": "1234"
+        },
+        "student:2": {
+            "password": "1234",
+            "failed_attempts": 0,
+            "lock_until": "2025-10-19T15:49:18"
+        },
+        "student:3": {
+            "password": "1234"
+        }
+    },
+    "next_lesson_id": 6
+}
