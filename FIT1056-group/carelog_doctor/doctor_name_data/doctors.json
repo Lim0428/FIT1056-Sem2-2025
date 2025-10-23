@@ -1,0 +1,15 @@
+[
+  {
+    "id": "doc1",
+    "name": "Dr. Gwen Noir",
+    "email": "doc@example.com",
+    "password": "pass123",
+    "safety_q": "pet?",
+    "safety_a": "milo",
+    "specialty": "General Medicine",
+    "qualifications": "MBBS",
+    "license_no": "D-001",
+    "working_hours": "Mon-Fri 9:00-17:00",
+    "contact": "+60-12-345-6789"
+  }
+]

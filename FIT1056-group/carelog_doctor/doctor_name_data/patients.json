@@ -1,0 +1,28 @@
+[
+  {
+    "id": "p1",
+    "name": "Alex Rivers",
+    "contact": "+60-10-000-1111",
+    "assigned_doctor_ids": ["doc1"],
+    "consent_to_all_doctors": false,
+    "conditions": ["Hypertension"],
+    "allergies": ["Penicillin"],
+    "medications": ["Amlodipine"],
+    "history": ["Admitted 2023-04"],
+    "uploads": [],
+    "ratings": [{"doctor_id": "doc1", "score": 4.7}]
+  },
+  {
+    "id": "p2",
+    "name": "Nicole Tan",
+    "contact": "+60-10-000-2222",
+    "assigned_doctor_ids": [],
+    "consent_to_all_doctors": true,
+    "conditions": ["Post-op knee"],
+    "allergies": [],
+    "medications": ["Paracetamol"],
+    "history": ["Surgery 2024-12"],
+    "uploads": [],
+    "ratings": [{"doctor_id": "doc1", "score": 4.9}]
+  }
+]
