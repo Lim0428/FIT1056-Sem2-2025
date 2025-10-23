@@ -173,40 +173,140 @@ def profile_card(store):
     )
 
 
-def messages_list(store):
-    # Demo messages (replace with real threads if available)
-    threads = []  # you can fill from store.list_threads(store) if needed
-    if not threads:
-        rows = [
-            ("Devon Lane", "You’ve got some kind of a sto…", "09:10"),
-            ("Jack Randall", "How are you feeling?", "08:00"),
-            ("Shell Wong", "OK, Got it! 😊", "04:12"),
-            ("Aura Kasih", "You’re welcome.🙏", "17/12/2023"),
-            ("Jonathan Wacid", "Thank you doctor!", "12/08/2023"),
-        ]
-    else:
-        # flatten your threads here
-        rows = []
-    st.markdown("""
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-          <div style="flex:1;"><input placeholder="Search for chats" style="width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:#0D1422;color:#E6E6E6;" /></div>
-          <div style="width:36px;height:36px;border-radius:10px;background:#0D1422;border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;">＋</div>
-        </div>
-    """, unsafe_allow_html=True)
-    for name, text, when in rows:
+def messages_panel(store):
+    """
+    Interactive dashboard message panel:
+      • Case-insensitive search
+      • Click a row to open conversation
+      • Send a reply (writes to messages.json)
+      • Mark resolved
+      • (Optional) Simulate patient reply for testing
+      • Threads sorted oldest -> newest so latest is at the bottom
+    """
+    import streamlit as st
+    from datetime import datetime
+    from doctor_name_services.messaging import list_threads, get_thread, add_message, mark_resolved
+
+    # --- helpers ---
+    def _parse_ts(s: str) -> datetime:
+        try:
+            return datetime.fromisoformat(str(s).replace("Z",""))
+        except Exception:
+            return datetime.min
+
+    # --- search ---
+    query = (st.text_input(
+        "Search for chats",
+        key="dash_msg_query",
+        label_visibility="collapsed",
+        placeholder="Search for chats",
+    ) or "").strip().lower()
+
+    # '+' new-thread placeholder (optional)
+    cols = st.columns([1, 0.12])
+    with cols[1]:
+        st.button("+", use_container_width=True, key="dash_msg_new_btn")
+
+    # --- data ---
+    threads = list_threads(store) or []
+
+    # normalize rows
+    items = []
+    for t in threads:
+        msgs = t.get("messages") or []
+        latest = msgs[-1] if msgs else {}
+        preview = str(latest.get("text", "")).strip()
+        name = t.get("name") or f"Patient #{t.get('patient_id','—')}"
+        when = t.get("updated_at") or latest.get("timestamp") or ""
+        items.append({
+            "id": t.get("id"),
+            "name": name,
+            "preview": preview,
+            "when": when,
+        })
+
+    # filter (case-insensitive)
+    if query:
+        items = [r for r in items if query in r["name"].lower() or query in r["preview"].lower()]
+
+    # sort oldest -> newest so latest shows at the bottom
+    items.sort(key=lambda r: _parse_ts(r["when"]))
+
+    # --- selected thread state ---
+    sel_key = "dash_selected_thread"
+    if sel_key not in st.session_state and items:
+        st.session_state[sel_key] = items[-1]["id"]  # default to newest
+
+    # --- render list with clickable rows ---
+    for r in items:
+        dt = _parse_ts(r["when"])
+        when_str = dt.strftime("%H:%M") if dt.date() == datetime.now().date() else dt.strftime("%d/%m/%Y")
+        pressed = st.button(
+            key=f"open_{r['id']}",
+            label=f"{r['name']} • {when_str}\n{r['preview']}",
+            use_container_width=True
+        )
+        # style the button like a row (CSS already makes buttons uniform)
+        if pressed:
+            st.session_state[sel_key] = r["id"]
+
+    # divider
+    st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
+
+    # --- conversation view ---
+    tid = st.session_state.get(sel_key)
+    if not tid:
+        return
+
+    thr = get_thread(store, tid)
+    if not thr:
+        st.warning("Thread not found or not permitted.")
+        return
+
+    st.markdown(f"**Thread #{thr['id']}** • Patient #{thr['patient_id']} • Status: {thr.get('status','open')}")
+    # render chat history (oldest → newest)
+    msgs = thr.get("messages", [])
+    for m in msgs:
+        who = "Doctor" if m.get("sender_role") == "doctor" else "Patient"
+        bubble_align = "flex-end" if who == "Doctor" else "flex-start"
+        bubble_bg     = "#2E5AAC" if who == "Doctor" else "#0D1422"
         st.markdown(
             f"""
-            <div style="display:flex;align-items:center;gap:10px; padding:10px; border-bottom:1px solid rgba(255,255,255,0.08);">
-              <div style="width:40px;height:40px;border-radius:50%;background:#1f2937;display:flex;align-items:center;justify-content:center;">💬</div>
-              <div style="flex:1;">
-                <div style="font-weight:600;">{name}</div>
-                <div style="font-size:12px;color:{MUTED};">{text}</div>
+            <div style="display:flex; justify-content:{bubble_align}; margin:4px 0;">
+              <div style="max-width:80%; padding:8px 12px; border-radius:12px;
+                          background:{bubble_bg}; border:1px solid rgba(255,255,255,0.10);">
+                <div style="font-size:12px; opacity:.8;">{who} • {m.get('timestamp','')}</div>
+                <div style="white-space:pre-wrap;">{m.get('text','')}</div>
               </div>
-              <div style="font-size:11px;color:{MUTED};">{when}</div>
             </div>
             """,
             unsafe_allow_html=True
         )
+
+    st.divider()
+    # reply box
+    with st.form(f"reply_form_{tid}", clear_on_submit=True):
+        txt = st.text_area("Reply", placeholder="Type your message…", height=80)
+        c1, c2, c3 = st.columns([1,1,1])
+        send = c1.form_submit_button("Send", use_container_width=True)
+        resolve = c2.form_submit_button("Mark Resolved", use_container_width=True)
+        simulate = c3.form_submit_button("Simulate Patient Reply (demo)", use_container_width=True)
+
+        if send and txt.strip():
+            add_message(store, tid, "doctor", txt.strip())
+            st.success("Sent.")
+            st.rerun()
+
+        if resolve and thr.get("status") != "resolved":
+            mark_resolved(store, tid)
+            st.success("Thread marked resolved.")
+            st.rerun()
+
+        if simulate:
+            add_message(store, tid, "patient", "Thanks doctor, noted.")
+            st.info("Simulated patient reply added.")
+            st.rerun()
+
 
 def duty_hour_strip():
     """Render the 7-day duty strip as real HTML (no Markdown escaping)."""
@@ -283,84 +383,71 @@ def overall_appointment_card():
         unsafe_allow_html=True
     )
 
-def screen_time_card(card_title="Duty Hour", mode_key="duty_mode"):
+# --- INTERACTIVE DUTY STRIP (Mon–Sun) + LINE CHART ---
+
+def duty_hour_strip_interactive(state_key="duty_selected"):
     """
-    iOS Screen Time–style card without illegal nested columns:
-      • Single columns row for Week/Day buttons
-      • Big headline time
-      • Weekly + hourly charts
+    Renders 7 pill buttons (Mon..Sun). Clicking a pill selects that day.
+    Stores selection in st.session_state[state_key] and returns the selected date.
     """
     import streamlit as st
+    from datetime import datetime, timedelta
+
+    today = datetime.now().date()
+    monday = today - timedelta(days=today.weekday())  # Monday start
+    days = [monday + timedelta(days=i) for i in range(7)]
+    labels = [d.strftime("%a\n%d") for d in days]     # e.g., "Mon\n20"
+
+    # default to today
+    if state_key not in st.session_state:
+        st.session_state[state_key] = today
+
+    cols = st.columns(7)
+    for i, c in enumerate(cols):
+        d = days[i]
+        is_sel = (st.session_state[state_key] == d)
+        # visually mark selected via emoji dot (keeps code simple). Optional.
+        label = labels[i] + ("  ●" if is_sel else "")
+        with c:
+            if st.button(label, use_container_width=True, key=f"duty_btn_{i}"):
+                st.session_state[state_key] = d
+
+    return st.session_state[state_key]
+
+
+def plot_day_work_line(selected_date, color="#4FC3F7"):
+    """
+    Plots a line graph for the selected date.
+    X-axis: hours 0..23
+    Y-axis: 'working minutes' (demo series for now).
+    """
     import numpy as np
     import matplotlib.pyplot as plt
-    from datetime import datetime
-    # state
-    if mode_key not in st.session_state:
-        st.session_state[mode_key] = "Day"
 
-    # centered Week/Day buttons using a SINGLE columns row
-    c = st.columns([3,1,1,3])
-    with c[1]:
-        if st.button("Week", use_container_width=True, key=f"{mode_key}_week"):
-            st.session_state[mode_key] = "Week"
-    with c[2]:
-        if st.button("Day", use_container_width=True, key=f"{mode_key}_day"):
-            st.session_state[mode_key] = "Day"
-
-    # title + subtitle
-    st.markdown(f"**{card_title}**")
-    st.caption("Avg Duty Hour 57 h")
-
-    # headline value (demo)
-    total_minutes = 5*60 + 26 if st.session_state[mode_key] == "Day" else 27*60
-    st.markdown(
-        f"<div style='font-size:40px;font-weight:800;margin:2px 0 8px 0;'>{total_minutes//60}h {total_minutes%60}m</div>",
-        unsafe_allow_html=True
-    )
-
-    # ------- Weekly chart -------
-    days = list("MTWTFSS")
-    vals = np.array([2.5, 4.2, 3.1, 2.8, 3.0, 5.0, 3.5])  # demo hours
-    today_idx = datetime.now().weekday()
-
-    fig1, ax1 = plt.subplots(figsize=(6.8, 1.9), facecolor="none")
-    ax1.set_facecolor("#0A0F18")
-    colors = ["#9CA3AF"]*7
-    colors[today_idx] = "#38BDF8"
-    ax1.bar(range(7), vals, color=colors, edgecolor="none", width=0.6)
-    ax1.set_xticks(range(7))
-    ax1.set_xticklabels(days, color="#E6E6E6")
-    ax1.set_yticks([0,1,2,3])
-    ax1.yaxis.grid(True, color="#263043", linestyle="--", linewidth=0.6, alpha=0.7)
-    ax1.tick_params(axis="y", colors="#9AA4B2")
-    for sp in ["top","right","left","bottom"]:
-        ax1.spines[sp].set_visible(False)
-    st.pyplot(fig1, use_container_width=True)
-
-    # ------- Hourly chart -------
+    # ----- demo series (replace with real data later) -----
     hours = np.arange(24)
-    base  = np.abs(np.sin(hours/3))*0.6
-    base[(hours>=17)&(hours<=21)] += np.array([0.4,0.6,0.8,0.6,0.4])
-    fig2, ax2 = plt.subplots(figsize=(6.8, 1.9), facecolor="none")
-    ax2.set_facecolor("#0A0F18")
-    ax2.bar(hours, base*60, color="#38BDF8", edgecolor="none", width=0.6)
-    ax2.set_xticks([0,6,12,18])
-    ax2.set_xticklabels(["00","06","12","18"], color="#E6E6E6")
-    ax2.set_yticks([0,30,60])
-    ax2.set_yticklabels(["0","30m","60m"], color="#9AA4B2")
-    ax2.yaxis.grid(True, color="#263043", linewidth=0.6, alpha=0.7)
-    for sp in ["top","right","left","bottom"]:
-        ax2.spines[sp].set_visible(False)
-    st.pyplot(fig2, use_container_width=True)
+    # base: two peaks across the day; scale to minutes
+    y = (np.sin((hours - 9) / 3.0) + 1.2).clip(min=0) * 20
+    y += (np.sin((hours - 18) / 2.5) + 1.0).clip(min=0) * 25
+    # small noise
+    rng = np.random.default_rng(abs(hash(str(selected_date))) % (2**32))
+    y = (y + rng.normal(0, 3, size=24)).clip(min=0)
 
-    # Legend (demo)
-    st.markdown(
-        """
-        <div style="display:flex;gap:24px;margin-top:4px;">
-          <div><span style="color:#38BDF8;font-weight:700;">Social</span> <span class="muted">3h 19m</span></div>
-          <div><span style="color:#60A5FA;font-weight:700;">Creativity</span> <span class="muted">1h 32m</span></div>
-          <div><span style="color:#F59E0B;font-weight:700;">Shopping & Food</span> <span class="muted">4m</span></div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    # ----- plot -----
+    fig, ax = plt.subplots(figsize=(6.8, 2.3), facecolor="none")
+    ax.set_facecolor("#0A0F18")
+    ax.plot(hours, y, linewidth=2.2, color=color)
+    ax.fill_between(hours, y, 0, color=color, alpha=0.18)
+
+    ax.set_xlim(0, 23)
+    ax.set_xticks([0, 6, 12, 18, 23])
+    ax.set_xticklabels(["00", "06", "12", "18", "23"], color="#E6E6E6")
+    ax.set_ylabel("Minutes", color="#E6E6E6")
+    ax.set_xlabel("Time", color="#E6E6E6")
+
+    ax.yaxis.grid(True, color="#263043", linewidth=0.6, alpha=0.7)
+    for sp in ["top", "right", "left", "bottom"]:
+        ax.spines[sp].set_visible(False)
+    ax.tick_params(axis="y", colors="#9AA4B2")
+    plt.tight_layout()
+    st.pyplot(fig, use_container_width=True)

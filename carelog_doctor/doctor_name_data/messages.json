@@ -1,1 +1,87 @@
-[]
+[
+  {
+    "id": "t1",
+    "doctor_id": "doc1",
+    "patient_id": "p1",
+    "name": "Devon Lane",
+    "status": "resolved",
+    "updated_at": "2025-10-24T02:49:17.274781",
+    "messages": [
+      {
+        "sender_role": "patient",
+        "text": "Hi Doctor, can we adjust my meds?",
+        "timestamp": "2025-10-24T08:55:00"
+      },
+      {
+        "sender_role": "doctor",
+        "text": "Sure, how are you feeling today?",
+        "timestamp": "2025-10-24T09:05:00"
+      },
+      {
+        "sender_role": "patient",
+        "text": "You've got some kind of a stomach ache\u2026",
+        "timestamp": "2025-10-24T09:10:00"
+      }
+    ]
+  },
+  {
+    "id": "t2",
+    "doctor_id": "doc1",
+    "patient_id": "p2",
+    "name": "Jack Randall",
+    "status": "open",
+    "updated_at": "2025-10-24T08:00:00",
+    "messages": [
+      {
+        "sender_role": "patient",
+        "text": "How are you feeling?",
+        "timestamp": "2025-10-24T08:00:00"
+      }
+    ]
+  },
+  {
+    "id": "t3",
+    "doctor_id": "doc1",
+    "patient_id": "p3",
+    "name": "Shell Wong",
+    "status": "open",
+    "updated_at": "2025-10-24T04:12:00",
+    "messages": [
+      {
+        "sender_role": "patient",
+        "text": "OK, Got it! \ud83d\ude0a",
+        "timestamp": "2025-10-24T04:12:00"
+      }
+    ]
+  },
+  {
+    "id": "t4",
+    "doctor_id": "doc1",
+    "patient_id": "p4",
+    "name": "Aura Kasih",
+    "status": "open",
+    "updated_at": "2023-12-17T00:00:00",
+    "messages": [
+      {
+        "sender_role": "patient",
+        "text": "You're welcome. \ud83d\ude4f",
+        "timestamp": "2023-12-17T00:00:00"
+      }
+    ]
+  },
+  {
+    "id": "t5",
+    "doctor_id": "doc1",
+    "patient_id": "p5",
+    "name": "Jonathan Wacid",
+    "status": "resolved",
+    "updated_at": "2023-08-12T00:00:00",
+    "messages": [
+      {
+        "sender_role": "patient",
+        "text": "Thank you doctor!",
+        "timestamp": "2023-08-12T00:00:00"
+      }
+    ]
+  }
+]

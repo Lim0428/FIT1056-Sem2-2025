@@ -17,6 +17,7 @@ from doctor_name_pages.patient import page_patients
 from doctor_name_pages.encounters import page_encounters
 from doctor_name_pages.appointments import page_appointments
 from doctor_name_pages.messages import page_messages
+from doctor_name_pages.dashboard import page_dashboard
 
 st.set_page_config(page_title="CareLog • Doctor Portal", page_icon="🩺", layout="wide")
 inject_theme()
