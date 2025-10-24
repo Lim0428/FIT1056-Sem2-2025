@@ -11,3 +11,9 @@
 {"timestamp": "2025-10-24T10:15:55.374690", "user_id": "doc1", "action": "message.send", "target": "t4", "extra": {"sender": "doctor"}}
 {"timestamp": "2025-10-24T11:11:21.392109", "user_id": "doc1", "action": "message.resolve", "target": "t2", "extra": {}}
 {"timestamp": "2025-10-24T11:12:04.373787", "user_id": "doc1", "action": "profile.update", "target": "doc1", "extra": {}}
+{"timestamp": "2025-10-24T17:57:08.989473", "user_id": "doc1", "action": "message.send", "target": "t2", "extra": {"sender": "doctor"}}
+{"timestamp": "2025-10-24T20:09:04.168424", "user_id": "doc1", "action": "message.send", "target": "t2", "extra": {"sender": "doctor"}}
+{"timestamp": "2025-10-24T20:09:23.402493", "user_id": "doc1", "action": "message.send", "target": "t3", "extra": {"sender": "doctor"}}
+{"timestamp": "2025-10-24T20:09:24.661743", "user_id": "doc1", "action": "message.resolve", "target": "t3", "extra": {}}
+{"timestamp": "2025-10-24T20:32:45.634267", "user_id": "doc1", "action": "message.send", "target": "t3", "extra": {"sender": "patient"}}
+{"timestamp": "2025-10-24T20:33:44.295685", "user_id": "doc1", "action": "message.send", "target": "t4", "extra": {"sender": "patient"}}

@@ -50,7 +50,7 @@
     "patient_id": "p2",
     "name": "Jack Randall",
     "status": "resolved",
-    "updated_at": "2025-10-24T11:11:21.388831",
+    "updated_at": "2025-10-24T20:09:04.163992",
     "messages": [
       {
         "sender_role": "patient",
@@ -61,6 +61,16 @@
         "sender_role": "doctor",
         "text": "okay",
         "timestamp": "2025-10-24T08:54:50.630912"
+      },
+      {
+        "sender_role": "doctor",
+        "text": "fch",
+        "timestamp": "2025-10-24T17:57:08.982429"
+      },
+      {
+        "sender_role": "doctor",
+        "text": "haha",
+        "timestamp": "2025-10-24T20:09:04.163992"
       }
     ]
   },
@@ -69,13 +79,23 @@
     "doctor_id": "doc1",
     "patient_id": "p3",
     "name": "Shell Wong",
-    "status": "open",
-    "updated_at": "2025-10-24T04:12:00",
+    "status": "resolved",
+    "updated_at": "2025-10-24T20:32:45.622658",
     "messages": [
       {
         "sender_role": "patient",
         "text": "OK, Got it! 😊",
         "timestamp": "2025-10-24T04:12:00"
+      },
+      {
+        "sender_role": "doctor",
+        "text": "haha",
+        "timestamp": "2025-10-24T20:09:23.398097"
+      },
+      {
+        "sender_role": "patient",
+        "text": "Thanks doctor, noted.",
+        "timestamp": "2025-10-24T20:32:45.622658"
       }
     ]
   },
@@ -85,7 +105,7 @@
     "patient_id": "p4",
     "name": "Aura Kasih",
     "status": "resolved",
-    "updated_at": "2025-10-24T10:15:55.367253",
+    "updated_at": "2025-10-24T20:33:44.291535",
     "messages": [
       {
         "sender_role": "patient",
@@ -101,6 +121,11 @@
         "sender_role": "doctor",
         "text": "haha",
         "timestamp": "2025-10-24T10:15:55.367253"
+      },
+      {
+        "sender_role": "patient",
+        "text": "Thanks doctor, noted.",
+        "timestamp": "2025-10-24T20:33:44.291535"
       }
     ]
   },

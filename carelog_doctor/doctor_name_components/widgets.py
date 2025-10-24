@@ -376,6 +376,74 @@ def duty_hour_strip():
 # Duty hour: interactive 7-day strip + per-day line chart
 def duty_hour_strip_interactive(state_key="duty_selected"):
     """
+    7 compact chips (Mon..Sun). Selected chip appears bigger via wrapper.
+    Single-click selection + CSS to keep labels on ONE line.
+    """
+    from datetime import datetime, timedelta
+
+    # --- force one-line horizontal text for all buttons in this block ---
+    st.markdown(
+        """
+        <style>
+        .stButton > button p { 
+            white-space: nowrap !important;      /* no wrapping */
+            writing-mode: horizontal-tb !important; /* never vertical */
+            letter-spacing: normal !important;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    today = datetime.now().date()
+    monday = today - timedelta(days=today.weekday())
+    days = [monday + timedelta(days=i) for i in range(7)]
+
+    if state_key not in st.session_state:
+        st.session_state[state_key] = today
+
+    def _select_day(d):
+        st.session_state[state_key] = d
+
+    cols = st.columns(7)
+    for i, col in enumerate(cols):
+        d = days[i]
+        is_sel = (st.session_state[state_key] == d)
+
+        # ✅ single-line label (no newline characters)
+        label = f"{d.strftime('%a')} {d.day:02d}" + ("  ●" if is_sel else "")
+
+        with col:
+            if is_sel:
+                # higher-contrast wrapper so selected chip looks bigger
+                st.markdown(
+                    """
+                    <div style="
+                        padding:8px;
+                        border-radius:16px;
+                        background:rgba(148,163,184,0.10);
+                        border:1px solid rgba(148,163,184,0.35);
+                        box-shadow: 0 1px 6px rgba(0,0,0,0.25);
+                    ">
+                    """,
+                    unsafe_allow_html=True,
+                )
+
+            st.button(
+                label,
+                key=f"duty_btn_{i}",
+                use_container_width=True,
+                type="secondary",
+                on_click=_select_day,
+                args=(d,),
+            )
+
+            if is_sel:
+                st.markdown("</div>", unsafe_allow_html=True)
+
+    return st.session_state[state_key]
+
+    """
     7 compact chips (Mon..Sun). Selected chip is clearer (higher-contrast
     wrapper and subtle shadow). Single-click selection.
     """
@@ -462,15 +530,14 @@ def plot_day_work_line(selected_date, color="#4FC3F7"):
 
 # -------------------------------------------------------------------
 # Appointment history + overall appointment mini card
-# -------------------------------------------------------------------
-def appointment_history_list(store, month_only: bool = True, limit: int | None = None):
+def appointment_history_list(store, month_only: bool = True, limit: int | None = None, key_prefix: str = "hist"):
     """
-    Past appointments list with clearer contrast. 'View' opens the detail page.
+    Past appointments list with clearer contrast.
+    - Shows only past items (optionally just this month).
+    - limit: show only the first N rows (e.g., 2 on dashboard).
+    - key_prefix: avoids DuplicateWidgetID when rendering in multiple places.
     """
     from datetime import datetime
-
-    appts = store.list_all_appointments() or []
-    now = datetime.now()
 
     def _parse(iso: str):
         try:
@@ -489,8 +556,9 @@ def appointment_history_list(store, month_only: bool = True, limit: int | None =
     def _fmt_range(a: dict) -> str:
         s = _parse(a.get("start", ""))
         e = _parse(a.get("end", ""))
-        if not s: return "-"
-        md = s.strftime("%b %d")
+        if not s:
+            return "-"
+        md = s.strftime("%b %d, %Y")
         if e:
             same_ampm = ("AM" if s.hour < 12 else "PM") == ("AM" if e.hour < 12 else "PM")
             if same_ampm:
@@ -498,26 +566,35 @@ def appointment_history_list(store, month_only: bool = True, limit: int | None =
             return f"{md} • {_hm(s)}–{_hm(e)}"
         return f"{md} • {_hm(s)}"
 
-    # filter: past (optionally only this month)
-    past = []
+    appts = store.list_all_appointments() or []
+    now = datetime.now()
+
+    # Build filtered list of past appointments
+    rows = []
     for a in appts:
         dt = _parse(a.get("start", ""))
-        if dt and dt < now and (not month_only or (dt.year == now.year and dt.month == now.month)):
-            past.append(a)
+        if not dt or dt >= now:
+            continue  # past only
+        if month_only and not (dt.year == now.year and dt.month == now.month):
+            continue
+        rows.append(a)
 
-    past.sort(key=lambda x: _parse(x.get("start", "")) or datetime.min, reverse=True)
-    if limit:
-        past = past[:limit]
+    # newest first
+    rows.sort(key=lambda x: _parse(x.get("start", "")) or datetime.min, reverse=True)
 
-    if not past:
+    # apply limit (e.g., 2 for dashboard)
+    if limit is not None:
+        rows = rows[:limit]
+
+    if not rows:
         st.info("No appointment history to show.")
         return
 
-    for a in past:
+    # render
+    for i, a in enumerate(rows):
         title = a.get("reason", "Consultation") or "Consultation"
         subtitle = _fmt_range(a)
 
-        # Higher-contrast row: brighter title, clearer subtitle, stronger divider
         st.markdown(
             f"""
             <div style="display:flex;align-items:center;gap:12px; padding:12px;
@@ -535,11 +612,10 @@ def appointment_history_list(store, month_only: bool = True, limit: int | None =
             unsafe_allow_html=True
         )
 
-        # 'View' button: still secondary, but with a higher-contrast outline
-        # (Streamlit controls button colors; we enhance contrast via the container above.)
+        safe_id = str(a.get("id") or "row")
         view = st.button(
             "View",
-            key=f"hist_view_{a.get('id', id(a))}",
+            key=f"{key_prefix}_view_{safe_id}_{i}",  # unique key
             type="secondary",
         )
 
