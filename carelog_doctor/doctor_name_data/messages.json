@@ -5,7 +5,7 @@
     "patient_id": "p1",
     "name": "Devon Lane",
     "status": "resolved",
-    "updated_at": "2025-10-24T02:49:17.274781",
+    "updated_at": "2025-10-24T09:08:21.946187",
     "messages": [
       {
         "sender_role": "patient",
@@ -19,8 +19,28 @@
       },
       {
         "sender_role": "patient",
-        "text": "You've got some kind of a stomach ache\u2026",
+        "text": "You've got some kind of a stomach ache…",
         "timestamp": "2025-10-24T09:10:00"
+      },
+      {
+        "sender_role": "patient",
+        "text": "Thanks doctor, noted.",
+        "timestamp": "2025-10-24T08:55:33.193519"
+      },
+      {
+        "sender_role": "doctor",
+        "text": "aaa",
+        "timestamp": "2025-10-24T08:55:50.224628"
+      },
+      {
+        "sender_role": "doctor",
+        "text": "aaaa",
+        "timestamp": "2025-10-24T08:59:16.733792"
+      },
+      {
+        "sender_role": "patient",
+        "text": "Thanks doctor, noted.",
+        "timestamp": "2025-10-24T09:08:21.946187"
       }
     ]
   },
@@ -29,13 +49,18 @@
     "doctor_id": "doc1",
     "patient_id": "p2",
     "name": "Jack Randall",
-    "status": "open",
-    "updated_at": "2025-10-24T08:00:00",
+    "status": "resolved",
+    "updated_at": "2025-10-24T11:11:21.388831",
     "messages": [
       {
         "sender_role": "patient",
         "text": "How are you feeling?",
         "timestamp": "2025-10-24T08:00:00"
+      },
+      {
+        "sender_role": "doctor",
+        "text": "okay",
+        "timestamp": "2025-10-24T08:54:50.630912"
       }
     ]
   },
@@ -49,7 +74,7 @@
     "messages": [
       {
         "sender_role": "patient",
-        "text": "OK, Got it! \ud83d\ude0a",
+        "text": "OK, Got it! 😊",
         "timestamp": "2025-10-24T04:12:00"
       }
     ]
@@ -59,13 +84,23 @@
     "doctor_id": "doc1",
     "patient_id": "p4",
     "name": "Aura Kasih",
-    "status": "open",
-    "updated_at": "2023-12-17T00:00:00",
+    "status": "resolved",
+    "updated_at": "2025-10-24T10:15:55.367253",
     "messages": [
       {
         "sender_role": "patient",
-        "text": "You're welcome. \ud83d\ude4f",
+        "text": "You're welcome. 🙏",
         "timestamp": "2023-12-17T00:00:00"
+      },
+      {
+        "sender_role": "patient",
+        "text": "Thanks doctor, noted.",
+        "timestamp": "2025-10-24T09:08:46.241153"
+      },
+      {
+        "sender_role": "doctor",
+        "text": "haha",
+        "timestamp": "2025-10-24T10:15:55.367253"
       }
     ]
   },

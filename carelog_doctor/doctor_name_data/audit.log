@@ -1,3 +1,13 @@
 {"timestamp": "2025-10-24T00:03:05.655440", "user_id": "doc1", "action": "attachment.upload", "target": "p1", "extra": {"file": "p1_Copy of FIT1056_SoftwareDeliverable_Template.pdf"}}
 {"timestamp": "2025-10-24T00:03:31.553714", "user_id": "doc1", "action": "encounter.save", "target": "p1", "extra": {}}
 {"timestamp": "2025-10-24T02:49:17.279818", "user_id": "doc1", "action": "message.resolve", "target": "t1", "extra": {}}
+{"timestamp": "2025-10-24T08:54:50.635977", "user_id": "doc1", "action": "message.send", "target": "t2", "extra": {"sender": "doctor"}}
+{"timestamp": "2025-10-24T08:55:33.199075", "user_id": "doc1", "action": "message.send", "target": "t1", "extra": {"sender": "patient"}}
+{"timestamp": "2025-10-24T08:55:50.228906", "user_id": "doc1", "action": "message.send", "target": "t1", "extra": {"sender": "doctor"}}
+{"timestamp": "2025-10-24T08:59:16.737884", "user_id": "doc1", "action": "message.send", "target": "t1", "extra": {"sender": "doctor"}}
+{"timestamp": "2025-10-24T09:08:21.949162", "user_id": "doc1", "action": "message.send", "target": "t1", "extra": {"sender": "patient"}}
+{"timestamp": "2025-10-24T09:08:39.189290", "user_id": "doc1", "action": "message.resolve", "target": "t4", "extra": {}}
+{"timestamp": "2025-10-24T09:08:46.244682", "user_id": "doc1", "action": "message.send", "target": "t4", "extra": {"sender": "patient"}}
+{"timestamp": "2025-10-24T10:15:55.374690", "user_id": "doc1", "action": "message.send", "target": "t4", "extra": {"sender": "doctor"}}
+{"timestamp": "2025-10-24T11:11:21.392109", "user_id": "doc1", "action": "message.resolve", "target": "t2", "extra": {}}
+{"timestamp": "2025-10-24T11:12:04.373787", "user_id": "doc1", "action": "profile.update", "target": "doc1", "extra": {}}

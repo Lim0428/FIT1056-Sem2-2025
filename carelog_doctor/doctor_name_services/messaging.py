@@ -1,7 +1,6 @@
 from datetime import datetime
 from .data_store import FILES, _read_json, _write_json
 from .auth import current_doctor
-
 def list_threads(store):
     me = current_doctor()
     threads = _read_json(FILES["messages"], [])
@@ -18,20 +17,35 @@ def get_thread(store, thread_id: str):
 def _next_thread_id(threads):
     return f"t{len(threads)+1}"
 
-def add_message(store, thread_id: str, sender_role: str, text: str):
+def add_message(store, thread_id: str, sender_role: str, text: str) -> bool:
+    """Append a message to a thread and bump updated_at. Returns True on success."""
     threads = _read_json(FILES["messages"], [])
+    now = datetime.now().isoformat()
+
+    found = False
     for t in threads:
-        if t["id"] == thread_id:
-            t["messages"].append({
+        if t.get("id") == thread_id:
+            # optional: enforce doctor ownership
+            me = current_doctor()
+            if t.get("doctor_id") and t["doctor_id"] != me.get("id"):
+                return False  # not this doctor's thread
+
+            t.setdefault("messages", []).append({
                 "sender_role": sender_role,
                 "text": text,
-                "timestamp": datetime.now().isoformat()
+                "timestamp": now,
             })
-            t["updated_at"] = datetime.now().isoformat()
-            _write_json(FILES["messages"], threads)
-            store.audit("message.send", target=thread_id)
-            return True
-    return False
+            t["updated_at"] = now
+            found = True
+            break
+
+    if not found:
+        return False
+
+    _write_json(FILES["messages"], threads)
+    store.audit("message.send", target=thread_id, extra={"sender": sender_role})
+    return True
+
 
 def mark_resolved(store, thread_id: str):
     threads = _read_json(FILES["messages"], [])
