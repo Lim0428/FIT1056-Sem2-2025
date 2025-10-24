@@ -1,0 +1,191 @@
+[
+  {
+    "id": "p1",
+    "name": "Devon Lane",
+    "contact": "+60-10-000-1111",
+    "assigned_doctor_ids": [
+      "doc1"
+    ],
+    "consent_to_all_doctors": false,
+    "ratings": [
+      {
+        "doctor_id": "doc1",
+        "score": 4.7
+      }
+    ],
+    "treatments": [
+      {
+        "timestamp": "2025-10-24T21:06:42.250719",
+        "author": {
+          "id": "doc1",
+          "name": "doc@example.com"
+        },
+        "items": [
+          {
+            "drug": "eat mcd",
+            "dose": "100",
+            "frequency": "two",
+            "duration": "10"
+          }
+        ],
+        "notes": "haha"
+      },
+      {
+        "timestamp": "2025-10-24T21:06:47.021925",
+        "author": {
+          "id": "doc1",
+          "name": "doc@example.com"
+        },
+        "items": [
+          {
+            "drug": "eat mcd",
+            "dose": "100",
+            "frequency": "two",
+            "duration": "10"
+          }
+        ],
+        "notes": "haha"
+      }
+    ]
+  },
+  {
+    "id": "p2",
+    "name": "Jack Randall",
+    "contact": "+60-10-000-2222",
+    "assigned_doctor_ids": [
+      "doc1"
+    ],
+    "consent_to_all_doctors": false,
+    "ratings": [
+      {
+        "doctor_id": "doc1",
+        "score": 4.8
+      }
+    ],
+    "treatments": [
+      {
+        "timestamp": "2025-10-24T21:19:26.671120",
+        "author": {
+          "id": "doc1",
+          "name": "doc@example.com"
+        },
+        "items": [
+          {
+            "drug": "damn",
+            "dose": "haha",
+            "frequency": "1000",
+            "duration": "30"
+          }
+        ],
+        "notes": null
+      },
+      {
+        "timestamp": "2025-10-24T21:20:11.954477",
+        "author": {
+          "id": "doc1",
+          "name": "doc@example.com"
+        },
+        "items": [
+          {
+            "drug": "medication",
+            "dose": "dose",
+            "frequency": "1",
+            "duration": "14"
+          }
+        ],
+        "notes": "good"
+      }
+    ]
+  },
+  {
+    "id": "p3",
+    "name": "Shell Wong",
+    "contact": "+60-10-000-3333",
+    "assigned_doctor_ids": [
+      "doc1"
+    ],
+    "consent_to_all_doctors": false,
+    "ratings": [
+      {
+        "doctor_id": "doc1",
+        "score": 4.9
+      }
+    ],
+    "treatments": [
+      {
+        "timestamp": "2025-10-24T21:07:41.925814",
+        "author": {
+          "id": "doc1",
+          "name": "doc@example.com"
+        },
+        "items": [
+          {
+            "drug": "testing",
+            "dose": "yes",
+            "frequency": "goodgood",
+            "duration": "100"
+          }
+        ],
+        "notes": null
+      },
+      {
+        "timestamp": "2025-10-24T21:07:44.355563",
+        "author": {
+          "id": "doc1",
+          "name": "doc@example.com"
+        },
+        "items": [
+          {
+            "drug": "testing",
+            "dose": "yes",
+            "frequency": "goodgood",
+            "duration": "100"
+          }
+        ],
+        "notes": null
+      },
+      {
+        "timestamp": "2025-10-24T21:26:46.560119",
+        "author": {
+          "id": "doc1",
+          "name": "doc@example.com"
+        },
+        "items": [
+          {
+            "drug": "medication",
+            "dose": "ohyes",
+            "frequency": "1",
+            "duration": "10days"
+          }
+        ],
+        "notes": null
+      }
+    ]
+  },
+  {
+    "id": "p4",
+    "name": "Aura Kasih",
+    "contact": "+60-10-000-4444",
+    "assigned_doctor_ids": [],
+    "consent_to_all_doctors": true,
+    "ratings": [
+      {
+        "doctor_id": "doc1",
+        "score": 4.6
+      }
+    ]
+  },
+  {
+    "id": "p5",
+    "name": "Jonathan Wacid",
+    "contact": "+60-10-000-5555",
+    "assigned_doctor_ids": [],
+    "consent_to_all_doctors": true,
+    "ratings": [
+      {
+        "doctor_id": "doc1",
+        "score": 4.8
+      }
+    ]
+  }
+]

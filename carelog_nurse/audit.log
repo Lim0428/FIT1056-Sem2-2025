@@ -1,0 +1,4 @@
+{"ts": "2025-10-24T15:26:29Z", "event": "task_complete", "actor": "nurse_1", "subject": "task:t1", "details": {}}
+{"ts": "2025-10-24T15:26:35Z", "event": "task_complete", "actor": "nurse_1", "subject": "task:t2", "details": {}}
+{"ts": "2025-10-24T15:50:02Z", "event": "notif_ack", "actor": "nurse_1", "subject": "notif:n1", "details": {}}
+{"ts": "2025-10-24T15:50:10Z", "event": "notif_ack", "actor": "nurse_1", "subject": "notif:n2", "details": {}}

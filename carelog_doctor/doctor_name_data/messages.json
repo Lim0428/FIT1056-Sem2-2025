@@ -1,0 +1,147 @@
+[
+  {
+    "id": "t1",
+    "doctor_id": "doc1",
+    "patient_id": "p1",
+    "name": "Devon Lane",
+    "status": "resolved",
+    "updated_at": "2025-10-24T09:08:21.946187",
+    "messages": [
+      {
+        "sender_role": "patient",
+        "text": "Hi Doctor, can we adjust my meds?",
+        "timestamp": "2025-10-24T08:55:00"
+      },
+      {
+        "sender_role": "doctor",
+        "text": "Sure, how are you feeling today?",
+        "timestamp": "2025-10-24T09:05:00"
+      },
+      {
+        "sender_role": "patient",
+        "text": "You've got some kind of a stomach ache…",
+        "timestamp": "2025-10-24T09:10:00"
+      },
+      {
+        "sender_role": "patient",
+        "text": "Thanks doctor, noted.",
+        "timestamp": "2025-10-24T08:55:33.193519"
+      },
+      {
+        "sender_role": "doctor",
+        "text": "aaa",
+        "timestamp": "2025-10-24T08:55:50.224628"
+      },
+      {
+        "sender_role": "doctor",
+        "text": "aaaa",
+        "timestamp": "2025-10-24T08:59:16.733792"
+      },
+      {
+        "sender_role": "patient",
+        "text": "Thanks doctor, noted.",
+        "timestamp": "2025-10-24T09:08:21.946187"
+      }
+    ]
+  },
+  {
+    "id": "t2",
+    "doctor_id": "doc1",
+    "patient_id": "p2",
+    "name": "Jack Randall",
+    "status": "resolved",
+    "updated_at": "2025-10-24T20:09:04.163992",
+    "messages": [
+      {
+        "sender_role": "patient",
+        "text": "How are you feeling?",
+        "timestamp": "2025-10-24T08:00:00"
+      },
+      {
+        "sender_role": "doctor",
+        "text": "okay",
+        "timestamp": "2025-10-24T08:54:50.630912"
+      },
+      {
+        "sender_role": "doctor",
+        "text": "fch",
+        "timestamp": "2025-10-24T17:57:08.982429"
+      },
+      {
+        "sender_role": "doctor",
+        "text": "haha",
+        "timestamp": "2025-10-24T20:09:04.163992"
+      }
+    ]
+  },
+  {
+    "id": "t3",
+    "doctor_id": "doc1",
+    "patient_id": "p3",
+    "name": "Shell Wong",
+    "status": "resolved",
+    "updated_at": "2025-10-24T20:32:45.622658",
+    "messages": [
+      {
+        "sender_role": "patient",
+        "text": "OK, Got it! 😊",
+        "timestamp": "2025-10-24T04:12:00"
+      },
+      {
+        "sender_role": "doctor",
+        "text": "haha",
+        "timestamp": "2025-10-24T20:09:23.398097"
+      },
+      {
+        "sender_role": "patient",
+        "text": "Thanks doctor, noted.",
+        "timestamp": "2025-10-24T20:32:45.622658"
+      }
+    ]
+  },
+  {
+    "id": "t4",
+    "doctor_id": "doc1",
+    "patient_id": "p4",
+    "name": "Aura Kasih",
+    "status": "resolved",
+    "updated_at": "2025-10-24T20:33:44.291535",
+    "messages": [
+      {
+        "sender_role": "patient",
+        "text": "You're welcome. 🙏",
+        "timestamp": "2023-12-17T00:00:00"
+      },
+      {
+        "sender_role": "patient",
+        "text": "Thanks doctor, noted.",
+        "timestamp": "2025-10-24T09:08:46.241153"
+      },
+      {
+        "sender_role": "doctor",
+        "text": "haha",
+        "timestamp": "2025-10-24T10:15:55.367253"
+      },
+      {
+        "sender_role": "patient",
+        "text": "Thanks doctor, noted.",
+        "timestamp": "2025-10-24T20:33:44.291535"
+      }
+    ]
+  },
+  {
+    "id": "t5",
+    "doctor_id": "doc1",
+    "patient_id": "p5",
+    "name": "Jonathan Wacid",
+    "status": "resolved",
+    "updated_at": "2023-08-12T00:00:00",
+    "messages": [
+      {
+        "sender_role": "patient",
+        "text": "Thank you doctor!",
+        "timestamp": "2023-08-12T00:00:00"
+      }
+    ]
+  }
+]

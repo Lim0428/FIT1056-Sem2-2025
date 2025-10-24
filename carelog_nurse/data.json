@@ -1,0 +1,85 @@
+{
+  "nurses": [
+    {
+      "id": "nurse_1",
+      "name": "Sarah Lim",
+      "role": "Nurse"
+    }
+  ],
+  "patients": [
+    {
+      "id": "p1",
+      "name": "Nicole Tan",
+      "gender": "F",
+      "age": 65
+    },
+    {
+      "id": "p2",
+      "name": "Alex Rivers",
+      "gender": "M",
+      "age": 41
+    },
+    {
+      "id": "p3",
+      "name": "Jonathan Wacid",
+      "gender": "M",
+      "age": 54
+    }
+  ],
+  "assignments": [
+    {
+      "nurse_id": "nurse_1",
+      "patient_id": "p1"
+    },
+    {
+      "nurse_id": "nurse_1",
+      "patient_id": "p2"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "t1",
+      "nurse_id": "nurse_1",
+      "patient_id": "p1",
+      "title": "Administer Paracetamol 500 mg",
+      "due": "10:30",
+      "high_risk": false,
+      "completed": true,
+      "completed_ts": "2025-10-24T15:26:29Z"
+    },
+    {
+      "id": "t2",
+      "nurse_id": "nurse_1",
+      "patient_id": "p2",
+      "title": "Check BP and HR",
+      "due": "11:00",
+      "high_risk": true,
+      "completed": true,
+      "completed_ts": "2025-10-24T15:26:35Z"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "n1",
+      "nurse_id": "nurse_1",
+      "ts": "2025-10-24T15:22:33.481946Z",
+      "title": "Doctor order updated",
+      "body": "Dr. Wong updated med plan for p1.",
+      "ack": true,
+      "ack_ts": "2025-10-24T15:50:02Z"
+    },
+    {
+      "id": "n2",
+      "nurse_id": "nurse_1",
+      "ts": "2025-10-24T15:22:33.481959Z",
+      "title": "Patient call",
+      "body": "p2 requested assistance.",
+      "ack": true,
+      "ack_ts": "2025-10-24T15:50:10Z"
+    }
+  ],
+  "mar": [],
+  "vitals": [],
+  "notes": [],
+  "messages": []
+}
