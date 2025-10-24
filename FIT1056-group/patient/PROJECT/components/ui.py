@@ -1,5 +1,4 @@
 import streamlit as st
-
 from contextlib import contextmanager
 
 # Call this at the top of every page (and in carelog_main.py) once
