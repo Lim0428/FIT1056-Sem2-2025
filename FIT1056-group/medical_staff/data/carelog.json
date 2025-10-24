@@ -1,0 +1,41 @@
+{
+  "patients": [
+    {
+      "id": "P0001",
+      "name": "Alice Tan",
+      "phone": "+60-12-3456789",
+      "assigned_staff_id": "S001"
+    },
+    {
+      "id": "P0002",
+      "name": "Ben Lim",
+      "phone": "+60-19-2223344",
+      "assigned_staff_id": "S001"
+    }
+  ],
+  "appointments": [],
+  "messages": [
+    {
+      "id": "M1761323496",
+      "timestamp": "2025-10-25T00:31:36",
+      "from_role": "staff",
+      "from_staff_id": "S001",
+      "from_patient_id": null,
+      "to_role": "patient",
+      "to_patient_id": "P0001",
+      "from_name": "Staff S001",
+      "text": "hb"
+    },
+    {
+      "id": "M1761323557",
+      "timestamp": "2025-10-25T00:32:37",
+      "from_role": "staff",
+      "from_staff_id": "S001",
+      "from_patient_id": null,
+      "to_role": "patient",
+      "to_patient_id": "P0001",
+      "from_name": "Staff S001",
+      "text": "hb"
+    }
+  ]
+}
