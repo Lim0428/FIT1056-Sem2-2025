@@ -11,8 +11,7 @@ import streamlit as st
 from PIL import Image
 
 from doctor_name_services.auth import current_doctor
-from doctor_name_services.data_store import FILES, UPLOAD_DIR
-from doctor_name_services.data_store import DataStore  # for stats
+from doctor_name_services.data_store import FILES, UPLOAD_DIR, DataStore
 
 
 # ------------------------- tiny JSON utils -------------------------
@@ -65,36 +64,89 @@ def _css():
     st.markdown(
         """
         <style>
+          /* card */
           .profile-card {
             background: rgba(255,255,255,0.04);
             border:1px solid rgba(148,163,184,0.28);
-            border-radius:16px; padding:16px;
+            border-radius:16px; padding:18px;
           }
+
+          /* header row: avatar (left) + meta (right) */
+          .profile-header {
+            display:flex; align-items:center; gap:16px;
+          }
+
+          /* circular avatar */
           .avatar-wrap {
             width:112px; height:112px; border-radius:50%;
             border:1px solid rgba(148,163,184,0.35);
-            background:#0D1422; display:flex; align-items:center; justify-content:center;
-            overflow:hidden;
+            background:#0D1422;
+            display:flex; align-items:center; justify-content:center;
+            overflow:hidden; flex:0 0 112px;
           }
-          .avatar-img { width:100%; height:100%; object-fit:cover; }
+          .avatar-wrap img.avatar-img {
+            width:100%; height:100%; object-fit:cover; display:block;
+          }
+          .avatar-initials {
+            font-size:36px; color:#CDE9FF; font-weight:700;
+          }
+
+          /* name + specialty (at the right of avatar) */
+          .profile-meta .name {
+            font-size:22px; font-weight:800; color:#FFFFFF;
+            line-height:1.15; margin-bottom:2px;
+          }
+          .profile-meta .spec {
+            color:#E6F0FF; opacity:.9;
+          }
+
+          /* metric pills */
           .metric-pill {
             background:rgba(255,255,255,0.04);
             border:1px solid rgba(148,163,184,0.28);
             border-radius:12px; padding:10px; text-align:center;
           }
-          .metric-pill .v { font-size:20px; font-weight:800; }
+          .metric-pill .v { font-size:20px; font-weight:800; color:#FFFFFF; }
           .metric-pill .l { font-size:12px; color:#A9B7CC; }
-          .thin-note { font-size:12px; color:#9FB1C8; }
-          .uploader-wrap .stButton>button {
-              background:transparent; color:#BFE9FF; border-width:1.5px;
-              border-style:solid; border-image:linear-gradient(90deg,#4FC3F7,#2E5AAC) 1;
-              border-radius:14px; padding:.45rem .9rem;
-          }
-          .uploader-wrap .stButton>button:hover { background:rgba(79,195,247,.08); }
+
+          /* tabs: brighter selected */
           .stTabs [role="tab"] { color:#DCEBFF !important; font-weight:600; padding:8px 14px; }
           .stTabs [role="tab"][aria-selected="true"] {
               color:#FFFFFF !important; border-bottom:2px solid #ff5c5c !important;
               background:rgba(255,255,255,0.04);
+          }
+
+          /* dark uploader + uploaded file row */
+          [data-testid="stFileUploaderDropzone"] {
+              background:#0D1422 !important;
+              border:1px solid rgba(148,163,184,.28) !important;
+              border-radius:12px !important;
+          }
+          [data-testid="stFileUploaderDropzone"] * { color:#E6F0FF !important; }
+          .stFileUploader .uploadedFile, .stFileUploader .uploadedFile * {
+              background:#0D1422 !important; color:#E6F0FF !important;
+              border-color: rgba(148,163,184,.28) !important;
+          }
+
+          /* save button look (white) */
+          .uploader-actions .stButton>button{
+              background:#FFFFFF !important;
+              color:#0B1220 !important;
+              border:1px solid rgba(148,163,184,.35) !important;
+              border-radius:12px !important;
+              padding:.6rem 1.1rem !important;
+              box-shadow: 0 2px 8px rgba(0,0,0,.12) !important;
+          }
+          .uploader-actions .stButton>button:hover{
+              background:#F5F7FB !important;
+              border-color: rgba(148,163,184,.55) !important;
+          }
+          .uploader-actions .stButton>button:disabled{
+              background:#F0F2F6 !important;
+              color:#7B8799 !important;
+              border:1px solid rgba(148,163,184,.25) !important;
+              box-shadow:none !important;
+              cursor:not-allowed !important;
           }
         </style>
         """,
@@ -109,75 +161,79 @@ def _metric(value: str, label: str):
     )
 
 
-# ------------------------- avatar render (base64) -------------------------
-def _avatar_block(me: dict):
-    """
-    Show avatar reliably by embedding as data: URL (base64).
-    This avoids 'file://...' which browsers cannot access inside Streamlit.
-    """
-    avatar_path = me.get("avatar")
-    if avatar_path and Path(avatar_path).exists():
-        try:
-            with open(avatar_path, "rb") as f:
-                raw = f.read()
-            # best-effort mime sniff (default jpeg)
-            suffix = Path(avatar_path).suffix.lower()
-            mime = "image/png" if suffix == ".png" else "image/jpeg"
-            b64 = base64.b64encode(raw).decode("ascii")
-            st.markdown(
-                f"""
-                <div class="avatar-wrap">
-                  <img class="avatar-img" src="data:{mime};base64,{b64}" />
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-            return
-        except Exception:
-            pass  # fall back to initials if anything goes wrong
-
-    # fallback initials
-    initials = (me.get("name") or me.get("email", "?")).strip()[:2].upper()
-    st.markdown(
-        f"""<div class="avatar-wrap" style="font-size:36px;color:#CDE9FF">{initials}</div>""",
-        unsafe_allow_html=True,
-    )
+# ------------------------- image helpers -------------------------
+def _path_to_data_url(path_str: str) -> Optional[str]:
+    """Read an image file and return a base64 data URL (so browsers always show it)."""
+    try:
+        p = Path(path_str)
+        if not p.exists():
+            return None
+        with open(p, "rb") as f:
+            b = f.read()
+        b64 = base64.b64encode(b).decode("ascii")
+        return f"data:image/jpeg;base64,{b64}"
+    except Exception:
+        return None
 
 
-# ------------------------- avatar saving -------------------------
-def _save_avatar_from_upload(uploaded_file, doc_id: str) -> Optional[str]:
+def _save_avatar_from_upload(uploaded_file, doc_id: str) -> str | None:
     """
-    Robust save using getvalue() to avoid zero-length reads.
-    Always writes JPEG at uploads/avatar_<doc_id>.jpg.
+    Save avatar from file_uploader to /uploads as a square 512px JPEG.
+    Uses single-click flow; returns saved path or None.
     """
     try:
-        raw = uploaded_file.getvalue()  # reliable across browsers
+        raw = uploaded_file.getvalue()
+        if not raw:
+            return None
         img = Image.open(BytesIO(raw)).convert("RGB")
-        UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
-        out_path = UPLOAD_DIR / f"avatar_{doc_id}.jpg"
 
-        # Square center-crop + resize to keep the circle crisp
+        # center square crop
         w, h = img.size
         side = min(w, h)
         left = (w - side) // 2
         top = (h - side) // 2
         img = img.crop((left, top, left + side, top + side)).resize((512, 512))
+
+        UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+        out_path = (UPLOAD_DIR / f"avatar_{doc_id}.jpg").as_posix()
         img.save(out_path, format="JPEG", quality=92)
-        return out_path.as_posix()
+        return out_path
     except Exception as e:
         st.error(f"Failed to process avatar: {e}")
         return None
 
 
+def _avatar_html(me: dict) -> str:
+    """
+    Build circular avatar markup:
+      - If avatar exists, embed as base64 data URL (not file://) so it always loads
+      - Else show initials.
+    """
+    avatar_path = me.get("avatar")
+    if avatar_path:
+        data_url = _path_to_data_url(avatar_path)
+        if data_url:
+            return f'<div class="avatar-wrap"><img class="avatar-img" src="{data_url}" alt="avatar"/></div>'
+    initials = (me.get("name") or me.get("email", "?")).strip()[:2].upper()
+    return f'<div class="avatar-wrap"><div class="avatar-initials">{initials}</div></div>'
+
+
 # ------------------------- page -------------------------
 def page_profile(store: Optional[DataStore] = None):
+    """
+    Profile/com-card:
+      • Header row: circular avatar (left) + name & specialty on the RIGHT
+      • Change photo expander directly under header
+      • White 'Save new avatar' button + toast on success + rerun
+      • Remaining tabs (Overview, Edit profile, Schedule, Security)
+    """
     _css()
     st.markdown("### My Profile")
 
-    me_row = _get_me()
-    doc_id = me_row.get("id", "doc1")
-    name = me_row.get("name") or me_row.get("email", "Doctor")
-    specialty = me_row.get("specialty", "General Medicine")
+    me = _get_me()
+    doc_id = me.get("id", "doc1")
+    name = me.get("name") or me.get("email", "Doctor")
+    specialty = me.get("specialty", "General Medicine")
 
     # stats
     avg_rating, n_ratings = (store.doctor_average_rating() if store else (0.0, 0))
@@ -185,56 +241,69 @@ def page_profile(store: Optional[DataStore] = None):
 
     left, right = st.columns([5, 7], gap="large")
 
-    # ---------------- LEFT: card + avatar + uploader ----------------
+    # ---------------- LEFT: card + header (avatar + meta) + uploader ----------------
     with left:
         with st.container(border=True):
             st.markdown('<div class="profile-card">', unsafe_allow_html=True)
 
-            # avatar
-            _avatar_block(me_row)
+            # Header row: avatar + meta on the RIGHT (avatar via base64 data URL)
+            avatar_html = _avatar_html(me)
             st.markdown(
-                f"<div style='font-size:22px;font-weight:800;margin-top:10px'>{name}</div>",
+                f"""
+                <div class="profile-header">
+                  {avatar_html}
+                  <div class="profile-meta">
+                    <div class="name">{name}</div>
+                    <div class="spec">{specialty}</div>
+                  </div>
+                </div>
+                """,
                 unsafe_allow_html=True,
             )
-            st.markdown(f"<div style='opacity:.9'>{specialty}</div>", unsafe_allow_html=True)
 
-            st.markdown("<div style='height:10px'></div>", unsafe_allow_html=True)
+            # Small metrics row
+            st.markdown("<div style='height:14px'></div>", unsafe_allow_html=True)
             c1, c2 = st.columns(2)
             with c1:
-                _metric(
-                    f"{avg_rating or '—'}",
-                    f"Overall rating{' ('+str(n_ratings)+')' if n_ratings else ''}",
-                )
+                _metric(f"{avg_rating or '—'}", f"Overall rating{' ('+str(n_ratings)+')' if n_ratings else ''}")
             with c2:
                 _metric(str(patient_count), "Patients")
 
-            st.markdown("<div style='height:14px'></div>", unsafe_allow_html=True)
-
-            # compact, nice uploader directly under avatar
+            # ---------- Change photo (directly below header) ----------
+            st.markdown("<div style='height:10px'></div>", unsafe_allow_html=True)
             with st.expander("Change photo", expanded=False):
                 st.caption("Upload a square image for best results.")
                 up = st.file_uploader(
                     "Select image",
                     type=["jpg", "jpeg", "png"],
-                    key="prof_avatar",
                     label_visibility="collapsed",
+                    accept_multiple_files=False,
+                    key="prof_avatar",
                 )
+
+                # Optional inline preview (doesn’t affect save logic)
                 if up is not None:
-                    # inline preview
                     try:
-                        st.image(up, caption="Preview", use_column_width=False, width=140)
+                        st.image(up, caption="Preview", width=140, use_column_width=False)
                     except Exception:
                         pass
 
-                    st.markdown('<div class="uploader-wrap">', unsafe_allow_html=True)
-                    if st.button("Save new avatar", key="btn_save_avatar"):
+                st.markdown('<div class="uploader-actions">', unsafe_allow_html=True)
+                save_clicked = st.button("Save new avatar", key="btn_save_avatar", disabled=(up is None))
+                st.markdown("</div>", unsafe_allow_html=True)
+                st.caption("JPG/PNG up to ~10MB.")
+
+                if save_clicked:
+                    if up is None:
+                        st.warning("Please choose an image first.")
+                    else:
                         saved = _save_avatar_from_upload(up, doc_id)
                         if saved:
                             _update_me({"avatar": saved})
                             st.toast("Avatar updated ✅", icon="✅")
                             st.rerun()
-                    st.markdown("</div>", unsafe_allow_html=True)
-                    st.markdown('<div class="thin-note">JPG/PNG up to ~10MB.</div>', unsafe_allow_html=True)
+                        else:
+                            st.error("Could not save avatar. Please try a different image.")
 
             st.markdown("</div>", unsafe_allow_html=True)
 
@@ -246,17 +315,17 @@ def page_profile(store: Optional[DataStore] = None):
         with tabs[0]:
             with st.container(border=True):
                 st.markdown("**Contact**")
-                st.write(me_row.get("contact", "—"))
+                st.write(me.get("contact", "—"))
                 st.markdown("**Email**")
-                st.write(me_row.get("email", "—"))
+                st.write(me.get("email", "—"))
                 st.markdown("**License No.**")
-                st.write(me_row.get("license_no", "—"))
+                st.write(me.get("license_no", "—"))
                 st.markdown("**Qualifications**")
-                st.write(me_row.get("qualifications", "—"))
+                st.write(me.get("qualifications", "—"))
                 st.markdown("**Working Hours**")
-                st.write(me_row.get("working_hours", "—"))
+                st.write(me.get("working_hours", "—"))
                 st.markdown("**Bio**")
-                st.write(me_row.get("bio", "—"))
+                st.write(me.get("bio", "—"))
 
         # Edit
         with tabs[1]:
@@ -264,52 +333,44 @@ def page_profile(store: Optional[DataStore] = None):
                 st.caption("Update your public profile information.")
                 c1, c2 = st.columns(2)
                 with c1:
-                    f_name = st.text_input("Full name", value=me_row.get("name", ""))
-                    f_email = st.text_input("Email", value=me_row.get("email", ""))
-                    f_contact = st.text_input("Contact", value=me_row.get("contact", ""))
-                    f_specialty = st.text_input(
-                        "Specialty", value=me_row.get("specialty", "General Medicine")
-                    )
+                    f_name = st.text_input("Full name", value=me.get("name", ""))
+                    f_email = st.text_input("Email", value=me.get("email", ""))
+                    f_contact = st.text_input("Contact", value=me.get("contact", ""))
+                    f_specialty = st.text_input("Specialty", value=me.get("specialty", "General Medicine"))
                 with c2:
-                    f_qual = st.text_input(
-                        "Qualifications", value=me_row.get("qualifications", "")
-                    )
-                    f_license = st.text_input("License No.", value=me_row.get("license_no", ""))
-                    f_hours = st.text_input(
-                        "Working hours", value=me_row.get("working_hours", "Mon–Fri 9:00–17:00")
-                    )
-                f_bio = st.text_area("Short bio", value=me_row.get("bio", ""), height=120)
+                    f_qual = st.text_input("Qualifications", value=me.get("qualifications", ""))
+                    f_license = st.text_input("License No.", value=me.get("license_no", ""))
+                    f_hours = st.text_input("Working hours", value=me.get("working_hours", "Mon–Fri 9:00–17:00"))
+                f_bio = st.text_area("Short bio", value=me.get("bio", ""), height=120)
 
                 saved = st.form_submit_button("Save changes", use_container_width=True)
                 if saved:
-                    _update_me(
-                        {
-                            "name": f_name.strip(),
-                            "email": f_email.strip(),
-                            "contact": f_contact.strip(),
-                            "specialty": f_specialty.strip(),
-                            "qualifications": f_qual.strip(),
-                            "license_no": f_license.strip(),
-                            "working_hours": f_hours.strip(),
-                            "bio": f_bio.strip(),
-                        }
-                    )
+                    _update_me({
+                        "name": f_name.strip(),
+                        "email": f_email.strip(),
+                        "contact": f_contact.strip(),
+                        "specialty": f_specialty.strip(),
+                        "qualifications": f_qual.strip(),
+                        "license_no": f_license.strip(),
+                        "working_hours": f_hours.strip(),
+                        "bio": f_bio.strip(),
+                    })
                     st.success("Profile updated.")
                     st.rerun()
 
-        # Schedule (read-only helper)
+        # Schedule
         with tabs[2]:
             with st.container(border=True):
                 st.markdown("**Working Hours**")
-                st.write(me_row.get("working_hours", "Mon–Fri 9:00–17:00"))
+                st.write(me.get("working_hours", "Mon–Fri 9:00–17:00"))
                 st.caption("If your schedule changes, update it in Edit profile.")
 
         # Security
         with tabs[3]:
             with st.form("security_form"):
                 st.caption("Update your security question/answer (used for recovery).")
-                q = st.text_input("Security question", value=me_row.get("safety_q", ""))
-                a = st.text_input("Security answer", value=me_row.get("safety_a", ""), type="password")
+                q = st.text_input("Security question", value=me.get("safety_q", ""))
+                a = st.text_input("Security answer", value=me.get("safety_a", ""), type="password")
                 ok = st.form_submit_button("Save security settings", use_container_width=True)
                 if ok:
                     _update_me({"safety_q": q, "safety_a": a})

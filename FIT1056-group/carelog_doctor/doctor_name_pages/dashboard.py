@@ -63,7 +63,6 @@ def page_dashboard(store):
             st.markdown('<div id="see-more-wrap">', unsafe_allow_html=True)
             if st.button("See more", type="secondary", key="dash_hist_see_more_grad"):
                 st.session_state["nav"] = "Appointment History"
-                st.session_state["_route_push"] = True
                 st.rerun()
             st.markdown("</div>", unsafe_allow_html=True)
 

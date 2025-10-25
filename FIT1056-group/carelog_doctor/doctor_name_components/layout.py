@@ -1,33 +1,32 @@
 # doctor_name_components/layout.py
+from __future__ import annotations
 import streamlit as st
 
-def topbar():
+def topbar() -> None:
+    # Minimal topbar – your existing one is fine; theme will handle colors
     st.markdown(
         """
-        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
-          <div style="display:flex; align-items:center; gap:10px;">
-            <span style="font-size:22px; font-weight:700;">CareLog • Doctor Portal</span>
-            <span class="pill">v2.0</span>
-          </div>
-          <div class="muted" style="font-size:14px;">
-            Secure • RBAC • Consent-gated
-          </div>
-        </div>
+        <div style="height:8px"></div>
         """,
         unsafe_allow_html=True,
     )
-    st.divider()
 
-def sidebar_menu():
+def sidebar_menu() -> str | None:
     with st.sidebar:
         st.markdown("### Navigation")
         choice = st.radio(
             "Go to",
-            ["Dashboard", "My Profile", "Patients", "Encounters", "Appointments", "Appointment History", "Messages"],
+            options=[
+                "Dashboard",
+                "My Profile",
+                "Patients",
+                "Encounters",
+                "Appointments",
+                "Appointment History",
+                "Messages",
+            ],
+            index=None,
             label_visibility="collapsed",
             key="sidebar_nav_radio",
-            index=["Dashboard", "My Profile", "Patients", "Encounters", "Appointments", "Appointment History", "Messages"].index(
-                st.session_state.get("nav", "Dashboard")
-            ),
         )
         return choice
