@@ -1,64 +1,43 @@
+# doctor_name_services/messaging.py
+from __future__ import annotations
 from datetime import datetime
 from .data_store import FILES, _read_json, _write_json
-from .auth import current_doctor
+from doctor_name_services.auth import current_doctor
 
-def list_threads(store):
-    me = current_doctor()
-    threads = _read_json(FILES["messages"], [])
-    return [t for t in threads if t["doctor_id"]==me["id"]]
+def _now_iso(): return datetime.now().isoformat()
 
-def get_thread(store, thread_id: str):
+def list_threads(store=None):
+    rows = _read_json(FILES["messages"], [])
     me = current_doctor()
-    threads = _read_json(FILES["messages"], [])
-    for t in threads:
-        if t["id"]==thread_id and t["doctor_id"]==me["id"]:
-            return t
+    return [t for t in rows if t.get("doctor_id")==me.get("id")] if me else rows
+
+def get_thread(store, tid):
+    rows = _read_json(FILES["messages"], [])
+    for t in rows:
+        if t.get("id")==tid: return t
     return None
 
-def _next_thread_id(threads):
-    return f"t{len(threads)+1}"
+def _save_threads(rows):
+    _write_json(FILES["messages"], rows)
 
-def add_message(store, thread_id: str, sender_role: str, text: str):
-    threads = _read_json(FILES["messages"], [])
-    for t in threads:
-        if t["id"] == thread_id:
-            t["messages"].append({
+def add_message(store, tid, sender_role, text):
+    rows = _read_json(FILES["messages"], [])
+    for t in rows:
+        if t.get("id")==tid:
+            t.setdefault("messages", []).append({
                 "sender_role": sender_role,
                 "text": text,
-                "timestamp": datetime.now().isoformat()
+                "timestamp": _now_iso()
             })
-            t["updated_at"] = datetime.now().isoformat()
-            _write_json(FILES["messages"], threads)
-            store.audit("message.send", target=thread_id)
-            return True
-    return False
+            t["updated_at"] = _now_iso()
+            if t.get("status")=="resolved":
+                t["status"]="open"
+            break
+    _save_threads(rows)
 
-def mark_resolved(store, thread_id: str):
-    threads = _read_json(FILES["messages"], [])
-    for t in threads:
-        if t["id"] == thread_id:
-            t["status"] = "resolved"
-            t["updated_at"] = datetime.now().isoformat()
-            _write_json(FILES["messages"], threads)
-            store.audit("message.resolve", target=thread_id)
-            return True
-    return False
-
-# helper for seeding / creating demo thread
-def seed_thread_for_patient(store, patient_id: str):
-    threads = _read_json(FILES["messages"], [])
-    me = current_doctor()
-    tid = _next_thread_id(threads)
-    threads.append({
-        "id": tid,
-        "doctor_id": me["id"],
-        "patient_id": patient_id,
-        "status": "open",
-        "updated_at": datetime.now().isoformat(),
-        "messages": [
-            {"sender_role":"patient","text":"Hello doctor, about my medication timing…","timestamp":datetime.now().isoformat()}
-        ]
-    })
-    _write_json(FILES["messages"], threads)
-    store.audit("message.thread.create", target=tid)
-    return tid
+def mark_resolved(store, tid):
+    rows = _read_json(FILES["messages"], [])
+    for t in rows:
+        if t.get("id")==tid:
+            t["status"]="resolved"; t["updated_at"]=_now_iso(); break
+    _save_threads(rows)

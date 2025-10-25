@@ -1,3 +1,4 @@
+# doctor_name_components/layout.py
 import streamlit as st
 
 def topbar():
@@ -20,9 +21,13 @@ def topbar():
 def sidebar_menu():
     with st.sidebar:
         st.markdown("### Navigation")
-        nav = st.radio(
-            "Go to", 
-            ["Dashboard", "My Profile", "Patients", "Encounters", "Appointments", "Messages"],
+        choice = st.radio(
+            "Go to",
+            ["Dashboard", "My Profile", "Patients", "Encounters", "Appointments", "Appointment History", "Messages"],
             label_visibility="collapsed",
+            key="sidebar_nav_radio",
+            index=["Dashboard", "My Profile", "Patients", "Encounters", "Appointments", "Appointment History", "Messages"].index(
+                st.session_state.get("nav", "Dashboard")
+            ),
         )
-    return nav
+        return choice

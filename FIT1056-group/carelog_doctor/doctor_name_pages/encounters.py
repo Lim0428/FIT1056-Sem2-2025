@@ -1,70 +1,59 @@
+# doctor_name_pages/encounters.py
 import streamlit as st
 from datetime import datetime
-from doctor_name_services.patients import patient_miniview
-from doctor_name_services.encounters import (
-    list_encounters_for_patient, add_encounter_version, upload_attachment, list_attachments
-)
-from doctor_name_services.consent import ensure_doctor_can_view_patient
+from doctor_name_services.data_store import FILES
+import json
 
-def page_encounters(store):
-    st.subheader("Clinical Documentation")
-    patients = store.list_assigned_or_consented_patients()
-    pid_options = {f"{p['name']} (#{p['id']})": p["id"] for p in patients}
-    if not pid_options:
-        st.info("No patients available under current permissions.")
-        return
+def _read(path, default):
+    try:
+        with open(path,"r",encoding="utf-8") as f: return json.load(f)
+    except: return default
 
-    sel = st.selectbox("Select patient", list(pid_options.keys()))
-    patient_id = pid_options[sel]
-    p = patient_miniview(store, patient_id)
+def _parse(s): 
+    try: return datetime.fromisoformat(str(s).replace("Z",""))
+    except: return None
 
-    if not ensure_doctor_can_view_patient(store, patient_id):
-        st.error("Access blocked by consent gate. This event is logged.")
-        return
+def page_encounters(store=None):
+    st.markdown("### Encounters")
 
-    with st.expander("Patient Summary", expanded=True):
-        st.write({
-            "Conditions": p.get("conditions", []),
-            "Allergies": p.get("allergies", []),
-            "Medications": p.get("medications", []),
-            "History": p.get("history", [])
-        })
+    encs = _read(FILES["encounters"], [])
+    if isinstance(encs, dict) and isinstance(encs.get("encounters"), list):
+        encs = encs["encounters"]
+    encs = [e for e in encs if isinstance(e, dict)]
+    encs.sort(key=lambda e: _parse(e.get("timestamp","") or e.get("created_at","")) or datetime.min, reverse=True)
 
-    st.markdown("#### Encounter Notes & Diagnosis (Versioned)")
-    history = list_encounters_for_patient(store, patient_id)
-    if history:
-        for enc in history:
-            with st.container():
-                st.markdown(f"**Encounter #{enc['encounter_id']}** • {enc['created_at']}")
-                st.write(enc["latest"])
-                with st.expander("View previous versions"):
-                    for v in enc.get("versions", []):
-                        st.write(v)
-    else:
-        st.caption("No encounters yet.")
+    kind = st.radio("Type", ["All", "Consultation", "Treatment", "Follow-up"], horizontal=True)
+    if kind != "All":
+        encs = [e for e in encs if (e.get("type") or "").lower() == kind.lower()]
 
-    st.markdown("#### Add/Update Encounter")
-    with st.form("encounter_form"):
-        diagnosis = st.text_input("Diagnosis")
-        notes = st.text_area("Notes / Assessment")
-        orders = st.text_area("Orders / Recommendations (labs, imaging, medication instructions)")
-        submitted = st.form_submit_button("Save encounter")
-        if submitted:
-            payload = {
-                "diagnosis": diagnosis,
-                "notes": notes,
-                "orders": orders,
-                "timestamp": datetime.now().isoformat()
-            }
-            add_encounter_version(store, patient_id, payload)
-            st.success("Saved. Version history updated.")
-            st.rerun()
+    q = st.text_input("Search", placeholder="Search by title or notes…").strip().lower()
+    if q:
+        encs = [e for e in encs if q in (e.get("title","")+ " "+ e.get("notes","")).lower()]
 
-    st.markdown("#### Attachments")
-    up = st.file_uploader("Upload attachment (PDF/Image)", type=["pdf","png","jpg","jpeg"])
-    if up is not None:
-        path = upload_attachment(store, patient_id, up)
-        st.success(f"Uploaded to {path}")
-    att = list_attachments(store, patient_id)
-    if att:
-        st.write(att)
+    left, right = st.columns([5,7], gap="large")
+    with left:
+        st.markdown("**List**")
+        for e in encs:
+            t = e.get("title") or e.get("type") or "Encounter"
+            w = _parse(e.get("timestamp","") or e.get("created_at",""))
+            sub = w.strftime("%b %d, %Y") if w else "—"
+            if st.button(f"{t}\n{sub}", key=f"enc_{e.get('id',id(e))}", use_container_width=True):
+                st.session_state["selected_enc_id"] = e.get("id")
+                st.rerun()
+
+    with right:
+        sel = st.session_state.get("selected_enc_id")
+        row = None
+        if sel:
+            for e in encs:
+                if e.get("id")==sel:
+                    row=e; break
+        row = row or (encs[0] if encs else None)
+        if not row:
+            st.info("No encounter selected."); return
+        st.markdown("**Details**")
+        st.write("Title:", row.get("title") or row.get("type") or "Encounter")
+        st.write("Patient:", row.get("patient_name") or f"Patient #{row.get('patient_id','—')}")
+        st.write("Timestamp:", row.get("timestamp") or row.get("created_at") or "—")
+        st.write("Notes:", row.get("notes","—"))
+        st.write("Versions:", row.get("versions", []))
