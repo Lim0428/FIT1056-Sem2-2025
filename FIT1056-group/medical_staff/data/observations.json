@@ -1,3 +1,14 @@
 {
-  "observations": []
+  "observations": [
+    {
+      "timestamp": "2025-10-25T09:31:26",
+      "staff_id": "S001",
+      "patient_id": "P0001",
+      "mood": "Very Happy",
+      "pain": 1,
+      "sleep": "Good",
+      "appetite": "Good",
+      "notes": "Recover well"
+    }
+  ]
 }

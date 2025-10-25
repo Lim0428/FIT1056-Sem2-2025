@@ -1,1 +1,37 @@
-{ "vitals": [] }
+{
+  "vitals": [
+    {
+      "timestamp": "2025-10-25T09:30:21",
+      "staff_id": "S001",
+      "patient_id": "P0001",
+      "temp_c": 37.1,
+      "systolic": 120,
+      "diastolic": 60,
+      "hr": 72,
+      "rr": 16,
+      "spo2": 98
+    },
+    {
+      "timestamp": "2025-10-25T09:30:34",
+      "staff_id": "S001",
+      "patient_id": "P0002",
+      "temp_c": 36.8,
+      "systolic": 120,
+      "diastolic": 80,
+      "hr": 72,
+      "rr": 16,
+      "spo2": 98
+    },
+    {
+      "timestamp": "2025-10-25T09:30:49",
+      "staff_id": "S001",
+      "patient_id": "P0001",
+      "temp_c": 37.0,
+      "systolic": 120,
+      "diastolic": 80,
+      "hr": 72,
+      "rr": 16,
+      "spo2": 98
+    }
+  ]
+}
