@@ -1,28 +1,15 @@
 [
   {
-    "id": "p1",
-    "name": "Alex Rivers",
-    "contact": "+60-11-2233-4455",
-    "assigned_doctor_ids": ["doc1"],
-    "consent_to_all_doctors": false,
-    "conditions": ["Hypertension"],
-    "allergies": ["Penicillin"],
-    "medications": ["Amlodipine 5mg daily"],
-    "history": ["Admitted Jan 2024 for blood pressure monitoring"],
-    "treatments": [],
-    "uploads": []
-  },
-  {
-    "id": "p2",
-    "name": "Nicole Tan",
-    "contact": "+60-12-3344-5566",
-    "assigned_doctor_ids": ["doc1"],
-    "consent_to_all_doctors": true,
-    "conditions": ["Post-op Knee Recovery"],
-    "allergies": [],
-    "medications": ["Paracetamol 500mg TDS"],
-    "history": ["Knee surgery in Feb 2025"],
-    "treatments": [],
-    "uploads": []
+    "id": "P000002",
+    "name": "",
+    "contact": "",
+    "appointments": [
+      {
+        "id": "A000001",
+        "dt": "2025-10-26T14:00:00",
+        "note": "haha"
+      }
+    ],
+    "updated_at": "2025-10-26T05:58:30.810861"
   }
 ]

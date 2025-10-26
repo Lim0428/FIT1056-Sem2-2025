@@ -1,0 +1,16 @@
+[
+  {
+    "id": "EC000001",
+    "patient_id": "P000001",
+    "priority": "high",
+    "category": "medical",        
+    "note": "Severe chest pain",
+    "location": "Room A",
+    "status": "open",              
+    "assigned_to": "",             
+    "ts": "2025-10-26T02:05:41.923Z",
+    "updates": [
+      {"ts":"2025-10-26T02:06:10.100Z","status":"acknowledged","by":"N000123"}
+    ]
+  }
+]

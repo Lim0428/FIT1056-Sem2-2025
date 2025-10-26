@@ -1,0 +1,26 @@
+[
+  {
+    "id": "S001",
+    "name": "Emily Wong",
+    "role": "Nurse",
+    "email": "emily@hospital.local",
+    "phone": "+60 10-900 0001",
+    "active": true,
+    "assigned_patients": [
+      "P0001",
+      "P0002"
+    ]
+  },
+  {
+    "id": "S002",
+    "name": "Dr. Daniel Lee",
+    "role": "Doctor",
+    "email": "d.lee@hospital.local",
+    "phone": "+60 10-900 0002",
+    "active": true,
+    "assigned_patients": [
+      "P0002",
+      "P0003"
+    ]
+  }
+]
