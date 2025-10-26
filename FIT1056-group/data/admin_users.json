@@ -1,0 +1,30 @@
+[
+  {
+    "id": 101,
+    "name": "Dr. Lim Wei Han",
+    "email": "dr.lim@carelog.com",
+    "role": "doctor",
+    "locked": false
+  },
+  {
+    "id": 201,
+    "name": "Nurse Aida",
+    "email": "aida.nurse@carelog.com",
+    "role": "nurse",
+    "locked": false
+  },
+  {
+    "id": 301,
+    "name": "Alex Tan",
+    "email": "alex.tan@carelog.com",
+    "role": "staff",
+    "locked": false
+  },
+  {
+    "id": 401,
+    "name": "Dr. Min",
+    "email": "min.counsel@carelog.com",
+    "role": "psychological_counselor",
+    "locked": false
+  }
+]

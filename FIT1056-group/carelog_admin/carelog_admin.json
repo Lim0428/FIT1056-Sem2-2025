@@ -1,0 +1,24 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Admin",
+      "email": "admin@carelog.local",
+      "role": "admin",
+      "locked": false,
+      "pwd": "admin123",
+      "code": "AD1"
+    }
+  ],
+  "patients": [],
+  "rooms": [],
+  "appointments": [],
+  "invoices": [],
+  "messages": [],
+  "ratings": [],
+  "login_attempts": {
+    "user@example.com": {
+      "fails": 0
+    }
+  }
+}

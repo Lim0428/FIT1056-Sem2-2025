@@ -1,0 +1,64 @@
+{
+  "users": {
+    "C0001": {
+      "id": "C0001",
+      "name": "Aisha Wong",
+      "email": "aisha@medilink.example",
+      "license": "CN-45821",
+      "specialties": [
+        "Anxiety",
+        "Depression"
+      ],
+      "hours": "Mon\u2013Fri 09:00\u201317:00",
+      "contact": "+60 12-345 6789",
+      "password": "password123",
+      "failed": 0,
+      "locked": false
+    }
+  },
+  "patients": {
+    "P0001": {
+      "id": "P0001",
+      "name": "Nicole Tan",
+      "dob": "1960-02-19",
+      "consented_to": "C0001",
+      "risk_flags": [
+        "falls"
+      ],
+      "language": "EN",
+      "allergies": [
+        "Penicillin"
+      ],
+      "assigned_counselor": "C0001"
+    }
+  },
+  "appointments": {},
+  "notes": {},
+  "safety_plans": {},
+  "messages": {
+    "T-1645b950": {
+      "title": "Good Morning",
+      "members": [
+        "C0001",
+        "P0001"
+      ],
+      "items": [
+        {
+          "by": "C0001",
+          "text": "This  Friday you have to come consultation.",
+          "ts": "2025-10-26T12:09:30"
+        }
+      ],
+      "reads": {
+        "C0001": 1
+      }
+    }
+  },
+  "consent": {
+    "P0001": {
+      "C0001": true
+    }
+  },
+  "assessments": {},
+  "audit": []
+}
