@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "from_id": 1,
+    "to_id": 7,
+    "text": "Morning! Please print tomorrow’s appointment list and leave it at the front desk.",
+    "ts": "2025-10-25T08:15:00Z",
+    "read": true
+  },
+  {
+    "id": 2,
+    "from_id": 7,
+    "to_id": 1,
+    "text": "Done. Also, we’re low on A4 paper—should I order two boxes?",
+    "ts": "2025-10-25T08:18:45Z",
+    "read": false
+  },
+  {
+    "id": 3,
+    "from_id": 1,
+    "to_id": 7,
+    "text": "Yes, please. Add one box of labels too.",
+    "ts": "2025-10-25T08:20:00Z",
+    "read": false
+  }
+]

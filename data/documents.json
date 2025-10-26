@@ -1,0 +1,22 @@
+[
+  {
+    "id": "D000001",
+    "uploaded_at": "2025-10-25T16:10:00",
+    "staff_id": "S001",
+    "patient_id": "P0001",
+    "name": "bp_log_week_43.pdf",
+    "stored_name": "20251025_161000_1_bp_log_week_43.pdf",
+    "kind": "report",
+    "note": "Patient-provided log"
+  },
+  {
+    "id": "D000002",
+    "uploaded_at": "2025-10-25T16:20:00",
+    "staff_id": "S002",
+    "patient_id": "P0002",
+    "name": "lfts_request_form.pdf",
+    "stored_name": "20251025_162000_2_lfts_request_form.pdf",
+    "kind": "order",
+    "note": ""
+  }
+]

@@ -1,0 +1,33 @@
+[
+  {
+    "id": 1,
+    "from_id": "1",
+    "to_id": "3",
+    "text": "Hi Dr. Lim, quick heads-up: tomorrow’s schedule is tight. Can you open one extra tele-slot at 4:30 PM?",
+    "ts": "2025-10-25T09:40:00Z",
+    "read": true
+  },
+  {
+    "id": 2,
+    "from_id": "3",
+    "to_id": "1",
+    "text": "Sure, I can do 4:30–5:00 PM. Please add one new patient and send me the details.",
+    "ts": "2025-10-25T09:42:00Z",
+    "read": false
+  },
+  {
+    "id": 3,
+    "from_id": "1",
+    "to_id": "3",
+    "text": "Great, noted. I’ll attach the patient card once created.",
+    "ts": "2025-10-25T09:45:10Z",
+    "read": false
+  },
+  {
+    "from_id": "1",
+    "to_id": "101",
+    "text": "hiqsij",
+    "ts": "2025-10-26T20:34:26+08:00",
+    "read": false
+  }
+]

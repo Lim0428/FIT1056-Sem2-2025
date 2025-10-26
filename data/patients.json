@@ -1,0 +1,12 @@
+{
+  "P000001": {
+    "id": "P000001",
+    "name": "Lim Jia Ler",
+    "dob": "2015-10-27",
+    "gender": "Female",
+    "medical_details": "Sweet",
+    "emergency_contact": "0123456789",
+    "avatar_path": "data/avatars/P000001.png",
+    "mrn": "fcvhbnjm,"
+  }
+}

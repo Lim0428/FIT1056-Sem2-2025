@@ -2,75 +2,49 @@
 import streamlit as st
 from datetime import datetime
 
-def _get_appt_by_id(store, appt_id):
-    # Try a direct method first
-    if hasattr(store, "get_appointment"):
-        appt = store.get_appointment(appt_id)
-        if appt: return appt
+def _parse(iso:str):
+    try: return datetime.fromisoformat(str(iso).replace("Z",""))
+    except: return None
 
-    # Fallback: search common lists
-    if hasattr(store, "list_all_appointments"):
-        for a in store.list_all_appointments() or []:
-            if a.get("id") == appt_id:
-                return a
-    if hasattr(store, "list_upcoming_appointments"):
-        for a in store.list_upcoming_appointments(limit=5000) or []:
-            if a.get("id") == appt_id:
-                return a
-    return None
+def _hm(dt):
+    h24,m=dt.hour, dt.minute
+    h12 = 12 if (h24%12)==0 else (h24%12)
+    ap = "AM" if h24<12 else "PM"
+    return f"{h12}:{m:02d} {ap}"
 
 def page_appointments(store):
-    st.markdown("### Appointment")
+    st.markdown("### Appointments")
 
-    appt_id = st.session_state.get("selected_appt_id")
-    if not appt_id:
-        st.info("No appointment selected from the dashboard.")
-        if st.button("Back to Dashboard"):
-            st.session_state["nav"] = "dashboard"
-            st.rerun()
-        return
+    appts = store.list_all_appointments()
+    appts.sort(key=lambda a: a.get("start",""))
 
-    appt = _get_appt_by_id(store, appt_id)
-    if not appt:
-        st.error("Appointment not found.")
-        if st.button("Back to Dashboard"):
-            st.session_state["nav"] = "dashboard"
-            st.rerun()
-        return
+    left, right = st.columns([5,7], gap="large")
 
-    # Pretty time formatting
-    def fmt(iso):
-        try:
-            return datetime.fromisoformat(iso.replace("Z","")).strftime("%d %b %Y • %I:%M %p")
-        except Exception:
-            return iso
+    with left:
+        st.markdown("**All appointments**")
+        for a in appts:
+            s=_parse(a.get("start","")); e=_parse(a.get("end",""))
+            title=(a.get("reason") or "Consultation").title()
+            sub = f"{s.strftime('%b %d, %Y')} • {_hm(s)}" + (f"–{_hm(e)}" if e else "")
+            if st.button(f"{title}\n{sub}", key=f"appt_{a.get('id',id(a))}", use_container_width=True):
+                st.session_state["selected_appt_id"] = a.get("id", None)
+                st.rerun()
 
-    st.markdown(
-        f"""
-        <div style="background: rgba(255,255,255,0.06);
-                    border:1px solid rgba(255,255,255,0.10);
-                    border-radius:16px; padding:16px;">
-          <div style="font-weight:700; font-size:18px; margin-bottom:6px;">
-            {appt.get('patient_name') or f"Patient #{appt.get('patient_id','—')}"}
-          </div>
-          <div style="color:#9AA4B2; margin-bottom:10px;">
-            Reason: {appt.get('reason','—')}
-          </div>
-          <div><b>Start:</b> {fmt(appt.get('start',''))}</div>
-          <div><b>End:</b> {fmt(appt.get('end',''))}</div>
-          <div><b>Status:</b> {appt.get('status','—')}</div>
-          <div><b>Location:</b> {appt.get('location','—')}</div>
-          <div style="margin-top:10px;"><b>Notes:</b><br/>{appt.get('notes','—')}</div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    st.write("")
-    cols = st.columns(2)
-    with cols[0]:
-        if st.button("Back to Dashboard", use_container_width=True, type="secondary"):
-            st.session_state["nav"] = "dashboard"
-            st.rerun()
-    with cols[1]:
-        st.button("Edit (coming soon)", use_container_width=True, type="secondary")
+    with right:
+        sel = st.session_state.get("selected_appt_id")
+        row = None
+        if sel:
+            for a in appts:
+                if a.get("id")==sel:
+                    row=a; break
+        row = row or (appts[0] if appts else None)
+        if not row:
+            st.info("No appointment selected.")
+            return
+        s=_parse(row.get("start","")); e=_parse(row.get("end",""))
+        st.markdown("**Details**")
+        st.write("Patient:", row.get("patient_name") or f"Patient #{row.get('patient_id','—')}")
+        st.write("Reason:", row.get("reason","Consultation").title())
+        st.write("Start:", s)
+        st.write("End:", e or "—")
+        st.write("Notes:", row.get("notes","—"))

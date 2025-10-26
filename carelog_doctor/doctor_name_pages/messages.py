@@ -1,9 +1,8 @@
 # doctor_name_pages/messages.py
 from __future__ import annotations
-import streamlit as st
-from datetime import datetime
-from typing import List, Dict, Any
 
+from datetime import datetime
+import streamlit as st
 
 from doctor_name_services.messaging import (
     list_threads,
@@ -12,203 +11,191 @@ from doctor_name_services.messaging import (
     mark_resolved,
 )
 
-# ---------- helpers ----------
-def _parse_ts(s: str) -> datetime:
+# ---------- version-safe rerun ----------
+def _rerun():
+    try:
+        st.rerun()  # Streamlit >= 1.30
+    except AttributeError:
+        st.experimental_rerun()  # older Streamlit
+
+
+def _ts(s: str):
     try:
         return datetime.fromisoformat(str(s).replace("Z", ""))
     except Exception:
-        return datetime.min
+        return None
 
-def _pretty_time(s: str) -> str:
-    try:
-        dt = datetime.fromisoformat(str(s).replace("Z", ""))
-    except Exception:
-        return ""
-    today = datetime.now().date()
-    if dt.date() == today:
-        return dt.strftime("%H:%M")
-    return dt.strftime("%d/%m/%Y")
 
-def _bubble(sender: str, text: str, ts: str) -> None:
-    me = (sender == "doctor")
-    align = "flex-end" if me else "flex-start"
-    bg    = "#2E5AAC" if me else "#0D1422"
-    fg    = "#E6F0FF" if me else "#E2E8F0"
-    meta  = f"{'Doctor' if me else 'Patient'} • {ts}"
+def page_messages(store):
+    st.markdown("### Secure Messaging")
 
+    # ---------- shared page CSS (thread list + reply UI) ----------
     st.markdown(
-        f"""
-        <div style="display:flex; justify-content:{align}; margin:6px 0;">
-          <div style="
-              max-width:80%;
-              background:{bg};
-              color:{fg};
-              border:1px solid rgba(255,255,255,0.10);
-              border-radius:14px;
-              padding:10px 12px;">
-            <div style="font-size:11px; opacity:.8; margin-bottom:4px;">{meta}</div>
-            <div style="white-space:pre-wrap; line-height:1.35">{text}</div>
-          </div>
-        </div>
+        """
+        <style>
+        /* Thread list buttons */
+        .threads .stButton>button{
+            width:100%;
+            text-align:left;
+            background:#0D1422;
+            color:#E6F4FF;
+            border:1px solid rgba(148,163,184,0.28);
+            border-radius:12px;
+            padding:10px 12px;
+            line-height:1.15;
+        }
+        .threads .stButton>button:hover{ background:#14213A; }
+        .tiny{ font-size:12px; color:#9AA4B2; margin:2px 0 10px; }
+
+        /* Reply textarea: dark bg, white text + placeholder */
+        div[data-testid="stTextArea"] textarea {
+            color: #EAF2FF !important;
+            background: #0D1422 !important;
+            border: 1px solid rgba(148,163,184,.35) !important;
+            border-radius: 12px !important;
+        }
+        div[data-testid="stTextArea"] textarea::placeholder {
+            color: #EAF2FF !important; opacity: .7 !important;
+        }
+        div[data-testid="stTextArea"] label p { color:#FFFFFF !important; }
+
+        /* Styled submit buttons in the reply form */
+        #reply-send button, #reply-resolve button {
+            border-radius: 12px !important;
+            padding: .6rem 1.1rem !important;
+            border: 1px solid transparent !important;
+            color: #FFFFFF !important;
+            box-shadow: none !important;
+        }
+        /* Primary send */
+        #reply-send button { background:#2E5AAC !important; }
+        #reply-send button:hover { background:#3A6AD1 !important; }
+        /* Resolve */
+        #reply-resolve button { background:#B94141 !important; }
+        #reply-resolve button:hover { background:#D45151 !important; }
+        </style>
         """,
         unsafe_allow_html=True,
     )
 
-# ---------- page ----------
-def page_messages(store):
-    st.markdown("### Secure Messaging")
+    # ---------- layout: 2 panes ----------
+    left, right = st.columns([5, 7], gap="large")
 
-    # CSS: Messenger-like list + tidy inputs
-    st.markdown(
-    """
-    <style>
-    /* Messenger-like thread buttons */
-    .threads-wrap .stButton > button {
-        width: 100%;
-        justify-content: flex-start;
-        background: #0D1422;
-        border: 1px solid rgba(148,163,184,0.28);
-        color: #E5E7EB;
-        padding: 12px 14px;
-        border-radius: 12px;
-        white-space: pre-line;          /* allow \\n in labels to show as new lines */
-        text-align: left;
-        line-height: 1.15;
-        font-weight: 600;
-    }
-    .threads-wrap .stButton > button:hover {
-        background: #121B2C;
-        border-color: rgba(148,163,184,0.40);
-    }
-    .threads-wrap .stButton > button:focus {
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(79,195,247,0.15) inset;
-    }
-    /* Dim the “secondary” lines (preview + time) by placing them after a \\n in label */
-    .threads-wrap .stButton > button {
-        /* we can’t target lines separately, so we simulate with lighter color in text */
-    }
-    .pane {
-        background: rgba(255,255,255,0.04);
-        border:1px solid rgba(148,163,184,0.25);
-        border-radius:14px;
-        padding:12px;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-
-    # --- read threads + normalize ---
-    raw_threads: List[Dict[str, Any]] = list_threads(store) or []
-    items = []
-    for t in raw_threads:
-        msgs = t.get("messages") or []
-        latest = msgs[-1] if msgs else {}
-        items.append({
-            "id": t.get("id"),
-            "patient_id": t.get("patient_id"),
-            "name": t.get("name") or f"Patient #{t.get('patient_id','—')}",
-            "status": t.get("status", "open"),
-            "preview": (latest.get("text") or "").strip(),
-            "updated_at": t.get("updated_at") or latest.get("timestamp") or "",
-        })
-    # newest first
-    items.sort(key=lambda r: _parse_ts(r["updated_at"]), reverse=True)
-
-    # --- left/right layout ---
-    left, right = st.columns([4, 8], gap="large")
-
-    # -------- LEFT: Messenger-like thread list --------
+    # ========== LEFT: thread list ==========
     with left:
-        with st.container(border=True):
-            st.markdown("**Threads**")
-            q = st.text_input("Search", placeholder="Search by patient or message…", label_visibility="collapsed")
-            ql = (q or "").strip().lower()
+        q = (
+            st.text_input(
+                "Search by patient or message…",
+                key="msg_q",
+                placeholder="Type to filter…",
+            )
+            or ""
+        ).strip().lower()
 
-            filtered = [r for r in items if (ql in r["name"].lower() or ql in r["preview"].lower())] if ql else items
+        threads = list_threads(store) or []
+        items = []
+        for t in threads:
+            msgs = t.get("messages") or []
+            latest = msgs[-1] if msgs else {}
+            name = t.get("name") or f"Patient #{t.get('patient_id','—')}"
+            ts_raw = t.get("updated_at") or latest.get("timestamp")
+            ts_dt = _ts(ts_raw)
+            items.append(
+                {
+                    "id": t.get("id"),
+                    "name": name,
+                    "preview": (latest.get("text") or "").strip(),
+                    "when_dt": ts_dt or datetime.min,
+                    "when_str": ts_dt.strftime("%d/%m %H:%M") if ts_dt else "",
+                    "status": t.get("status", "open"),
+                }
+            )
 
-            # ensure a selected thread id in session (default to first in filtered/newest)
-            sel_key = "messages_selected_thread"
-            if sel_key not in st.session_state and filtered:
-                st.session_state[sel_key] = filtered[0]["id"]
+        items.sort(key=lambda r: r["when_dt"], reverse=True)
 
-            # Render as a vertical list of “rows”
-            st.markdown('<div class="threads-wrap">', unsafe_allow_html=True)
-            for r in filtered:
-                status_icon = "●" if r["status"] == "open" else "○"
-                name_line   = f"{status_icon} {r['name']}"
-                preview     = (r['preview'] or "—").strip().replace("\n", " ")
-                preview     = preview if len(preview) <= 70 else preview[:67] + "…"
-                time_line   = _pretty_time(r["updated_at"])
-                # Use \\n to create two soft lines under the title
-                label = f"{name_line}\n{preview}\n{time_line}"
+        if q:
+            items = [
+                r
+                for r in items
+                if (q in r["name"].lower() or q in r["preview"].lower())
+            ]
 
-                if st.button(label, key=f"open_{r['id']}"):
-                    st.session_state[sel_key] = r["id"]
-            st.markdown('</div>', unsafe_allow_html=True)
+        sel_key = "selected_thread_id"
+        if sel_key not in st.session_state and items:
+            st.session_state[sel_key] = items[0]["id"]
 
-                        
+        st.markdown('<div class="threads">', unsafe_allow_html=True)
+        for r in items:
+            suffix = f" ({r['status']})" if r["status"] != "open" else ""
+            label = f"{r['name']}{suffix}\n{r['preview']}"
+            if st.button(label, key=f"open_thread_{r['id']}"):
+                st.session_state[sel_key] = r["id"]
+                _rerun()
 
-    # -------- RIGHT: Conversation + actions --------
+            st.markdown(
+                f"<div class='tiny'>{r['when_str']}</div>", unsafe_allow_html=True
+            )
+        st.markdown("</div>", unsafe_allow_html=True)
+
+    # ========== RIGHT: conversation ==========
     with right:
-        # resolve the selected id to a thread
-        tid = st.session_state.get("messages_selected_thread")
+        tid = st.session_state.get("selected_thread_id")
         thr = get_thread(store, tid) if tid else None
 
         if not thr:
-            st.info("Select a thread from the left to view messages.")
+            st.info("Select a conversation on the left.")
             return
 
-        with st.container(border=True):
+        st.markdown(
+            f"**Thread #{thr.get('id')} • Patient #{thr.get('patient_id')} • Status: {thr.get('status','open')}**"
+        )
+
+        # chat bubbles
+        for m in thr.get("messages", []):
+            who = "Doctor" if (m.get("sender_role") == "doctor") else "Patient"
+            ts = m.get("timestamp", "")
+            align = "flex-end" if who == "Doctor" else "flex-start"
+            bg = "#2E5AAC" if who == "Doctor" else "#0D1422"
             st.markdown(
-                f"**{thr.get('name') or f'Patient #{thr.get('patient_id','—')}'}**  \n"
-                f"<span class='muted'>Thread #{thr.get('id')} • Status: {thr.get('status','open')}</span>",
+                f"""
+                <div style="display:flex; justify-content:{align}; margin:6px 0;">
+                  <div style="max-width:80%; padding:10px 12px; border-radius:12px;
+                              background:{bg}; border:1px solid rgba(255,255,255,0.10);">
+                    <div style="font-size:12px; opacity:.8;">{who} • {ts}</div>
+                    <div style="white-space:pre-wrap;">{m.get('text','')}</div>
+                  </div>
+                </div>
+                """,
                 unsafe_allow_html=True,
             )
 
-            # history (oldest -> newest)
-            for m in thr.get("messages", []):
-                _bubble(
-                    sender=m.get("sender_role", "patient"),
-                    text=m.get("text", ""),
-                    ts=_pretty_time(m.get("timestamp", "")),
-                )
+        st.divider()
 
-            st.divider()
+        # reply form
+        with st.form(f"reply_form_{tid}", clear_on_submit=True):
+            txt = st.text_area(
+                "Reply", key=f"reply_text_{tid}", placeholder="Type your message…", height=100
+            )
+            c1, c2 = st.columns([3, 1])
 
-            # Actions OUTSIDE the form
-            c1, c2 = st.columns([1, 1])
+            # Wrap buttons for CSS hooks
             with c1:
-                # keep manual resolve too
-                if st.button("Mark Resolved", use_container_width=True, key=f"resolve_{thr['id']}"):
-                    if thr.get("status") != "resolved":
-                        mark_resolved(store, thr["id"])
-                        st.success("Thread marked resolved.")
-                        st.rerun()
-                    else:
-                        st.info("Already resolved.")
+                st.markdown('<div id="reply-send">', unsafe_allow_html=True)
+                send = st.form_submit_button("Send")
+                st.markdown("</div>", unsafe_allow_html=True)
+
             with c2:
-                if st.button("Simulate Patient Reply (demo)", use_container_width=True, key=f"sim_{thr['id']}"):
-                    add_message(store, thr["id"], "patient", "Thanks doctor, noted.")
-                    st.info("Simulated patient reply added.")
-                    st.rerun()
+                st.markdown('<div id="reply-resolve">', unsafe_allow_html=True)
+                resolve = st.form_submit_button("Mark Resolved")
+                st.markdown("</div>", unsafe_allow_html=True)
 
-            with st.form(key=f"reply_form_{thr['id']}", clear_on_submit=True):
-                msg = st.text_area("Reply", placeholder="Type your message…", height=110)
-                sent = st.form_submit_button("Send", use_container_width=True)
-                if sent:
-                    if msg.strip():
-                        ok = add_message(store, thr["id"], "doctor", msg.strip())
-                        # Auto-resolve the thread right after sending
-                        mark_resolved(store, thr["id"])
-                        if ok:
-                            st.success("Message sent and thread marked resolved.")
-                            st.rerun()
-                        else:
-                            st.error("Failed to send. Check thread ownership / JSON file.")
-                    else:
-                        st.warning("Message is empty.")
+        # handle actions
+        if send and (txt or "").strip():
+            add_message(store, tid, "doctor", (txt or "").strip())
+            st.toast("Message sent", icon="✅")
+            _rerun()
 
-            
+        if resolve and thr.get("status") != "resolved":
+            mark_resolved(store, tid)
+            st.toast("Thread marked resolved", icon="✅")
+            _rerun()

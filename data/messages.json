@@ -1,0 +1,115 @@
+[
+  {
+    "id": 1,
+    "patient_id": "P000001",
+    "doctor_id": "D000001",
+    "status": "closed",
+    "updated_at": "2025-10-25T18:31:23.867874",
+    "messages": [
+      {
+        "id": "m1",
+        "sender_role": "patient",
+        "text": "Hi doctor, can I take my medicine before breakfast?",
+        "timestamp": "2025-10-25T09:40:00"
+      },
+      {
+        "id": "m2",
+        "sender_role": "doctor",
+        "text": "Yes, take it 30 minutes before breakfast with water.",
+        "timestamp": "2025-10-25T09:42:00"
+      },
+      {
+        "id": "m3",
+        "sender_role": "patient",
+        "text": "Got it, thanks!",
+        "timestamp": "2025-10-26T01:45:12.221304"
+      },
+      {
+        "id": "m4",
+        "sender_role": "patient",
+        "text": "hi haha",
+        "timestamp": "2025-10-25T18:02:44.199488"
+      },
+      {
+        "id": "m5",
+        "sender_role": "doctor",
+        "text": "ppp",
+        "timestamp": "2025-10-26T02:04:36.682398"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "patient_id": "P000001",
+    "doctor_id": "D000002",
+    "status": "open",
+    "updated_at": "2025-10-25T18:02:41.783084",
+    "messages": [
+      {
+        "id": "m1",
+        "sender_role": "patient",
+        "text": "I still feel some pain at night. Any adjustment to the dose?",
+        "timestamp": "2025-10-26T01:48:10.004201"
+      },
+      {
+        "id": "m2",
+        "sender_role": "doctor",
+        "text": "Please keep the same dose for now and add a warm compress before bed.",
+        "timestamp": "2025-10-26T01:50:33.512908"
+      },
+      {
+        "id": "m3",
+        "sender_role": "patient",
+        "text": "hi haha",
+        "timestamp": "2025-10-25T18:02:41.783084"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "patient_id": "P000001",
+    "doctor_id": "D000001",
+    "status": "closed",
+    "updated_at": "2025-10-25T18:33:34.653818",
+    "messages": [
+      {
+        "id": "m1",
+        "sender_role": "patient",
+        "text": "Can I reschedule my appointment to Thursday?",
+        "timestamp": "2025-10-25T19:58:00"
+      },
+      {
+        "id": "m2",
+        "sender_role": "doctor",
+        "text": "Sure, moved to Thursday 12:00.",
+        "timestamp": "2025-10-25T20:05:00"
+      },
+      {
+        "id": "m3",
+        "sender_role": "patient",
+        "text": "Thanks, see you then.",
+        "timestamp": "2025-10-25T20:10:00"
+      },
+      {
+        "id": "m4",
+        "sender_role": "patient",
+        "text": "damn bro, wenkai is gay",
+        "timestamp": "2025-10-25T18:33:10.598510"
+      },
+      {
+        "id": "m5",
+        "sender_role": "patient",
+        "text": "damn bro, wenkai is gay",
+        "timestamp": "2025-10-25T18:33:34.653818"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "patient_id": "P000002",
+    "doctor_id": "",
+    "status": "open",
+    "updated_at": "2025-10-26T05:10:53.896438",
+    "messages": []
+  }
+]

@@ -4,7 +4,7 @@ import streamlit as st
 from datetime import datetime
 from typing import List, Dict, Any, Optional
 
-# ---------------- helpers ----------------
+# ---------- tiny helpers ----------
 def _parse(iso: str) -> Optional[datetime]:
     try:
         return datetime.fromisoformat(str(iso).replace("Z", ""))
@@ -12,16 +12,14 @@ def _parse(iso: str) -> Optional[datetime]:
         return None
 
 def _hm(dt: datetime, include_ampm: bool = True) -> str:
-    """Windows-safe hour:min formatter (no %-I)."""
     h24, m = dt.hour, dt.minute
     h12 = 12 if (h24 % 12) == 0 else (h24 % 12)
     ampm = "AM" if h24 < 12 else "PM"
     core = f"{h12}" if m == 0 else f"{h12}:{m:02d}"
     return f"{core} {ampm}" if include_ampm else core
 
-def _fmt_range(a: Dict[str, Any]) -> str:
-    s = _parse(a.get("start", ""))
-    e = _parse(a.get("end", ""))
+def _fmt_range(a: dict) -> str:
+    s = _parse(a.get("start", "")); e = _parse(a.get("end", ""))
     if not s:
         return "-"
     md = s.strftime("%b %d, %Y")
@@ -32,115 +30,107 @@ def _fmt_range(a: Dict[str, Any]) -> str:
         return f"{md} • {_hm(s)}–{_hm(e)}"
     return f"{md} • {_hm(s)}"
 
-def _reason(a: Dict[str, Any]) -> str:
-    return (a.get("reason") or "").strip() or "Consultation"
-
-def _patient(a: Dict[str, Any]) -> str:
-    return a.get("patient_name") or f"Patient #{a.get('patient_id','—')}"
-
-def _is_past(a: Dict[str, Any], now: datetime) -> bool:
-    dt = _parse(a.get("start", ""))
-    return bool(dt and dt < now)
-
-# -------------- row card -----------------
-def _history_row(appt: Dict[str, Any], idx: int) -> None:
-    title = _reason(appt)
-    subtitle = f"{_patient(appt)} • {_fmt_range(appt)}"
-
+def _row(appt: Dict[str, Any], idx: int) -> None:
+    title = appt.get("reason", "Consultation") or "Consultation"
+    subtitle = _fmt_range(appt)
+    patient = appt.get("patient_name") or f"Patient #{appt.get('patient_id','—')}"
     st.markdown(
         f"""
-        <div style="
-          display:flex; align-items:center; gap:12px; padding:12px;
-          background: rgba(255,255,255,0.04);
-          border:1px solid rgba(148,163,184,0.28);
-          border-radius:14px;">
-            <div style="width:40px;height:40px;border-radius:12px;
-                        background:#0B1220;border:1px solid rgba(148,163,184,0.35);
-                        display:flex;align-items:center;justify-content:center;">📌</div>
-            <div style="flex:1 1 auto; min-width:0;">
-              <div style="font-weight:800; color:#E7F0FF; font-size:16px;">{title}</div>
-              <div style="font-size:12px; color:#A9B7CC; margin-top:2px;">{subtitle}</div>
-            </div>
+        <div style="display:flex;align-items:center;gap:12px; padding:12px;
+                    border-bottom:1px solid rgba(148,163,184,0.30);">
+          <div style="width:38px;height:38px;border-radius:10px;
+                      background:#0B1220;
+                      border:1px solid rgba(148,163,184,0.35);
+                      display:flex;align-items:center;justify-content:center;">📌</div>
+          <div style="flex:1 1 auto; min-width:0;">
+            <div style="font-weight:700; color:#E5E7EB;">{title}</div>
+            <div style="font-size:12px; color:#CBD5E1; margin-top:2px;">{patient} • {subtitle}</div>
+          </div>
+          <div style="margin-left:auto;">
         """,
         unsafe_allow_html=True,
     )
-
-    # actions (right-aligned) rendered as a real Streamlit button
-    col_open = st.columns([1])[0]
-    open_btn = col_open.button("Open", key=f"hist_open_{appt.get('id', f'row_{idx}')}", type="secondary")
-    st.markdown("</div>", unsafe_allow_html=True)
-
-    if open_btn:
+    # unique button key by id+idx
+    safe_id = str(appt.get("id") or "row")
+    if st.button("Open", key=f"hist_open_{safe_id}_{idx}", type="secondary"):
         st.session_state["selected_appt_id"] = appt.get("id")
         st.session_state["nav"] = "Appointments"
         st.session_state["_route_push"] = True
         st.rerun()
+    st.markdown("</div></div>", unsafe_allow_html=True)
 
-# -------------- page ---------------------
+# ---------- page ----------
 def page_appointments_history(store):
-    st.markdown("### Appointments History")
-
-    # Minimal styling for cards and selector
+    # top action bar with back button
     st.markdown(
         """
         <style>
-        .seg-wrap .stRadio > div { gap: 10px; }
-        .seg-wrap label { padding: 8px 14px !important; border-radius: 999px !important; }
+        .ah-actions { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+        .ah-back .stButton > button{
+            background:transparent !important; color:#E6F4FF !important;
+            border-width:1.5px !important; border-style:solid !important;
+            border-radius:14px !important; padding:.45rem 0.9rem !important;
+            border-image: linear-gradient(90deg, #4FC3F7 0%, #2E5AAC 100%) 1 !important;
+            box-shadow:none !important;
+        }
+        .ah-back .stButton > button:hover{
+            box-shadow:0 0 0 3px rgba(79,195,247,0.12) inset,
+                       0 6px 24px rgba(46,90,172,0.25) !important;
+        }
         </style>
         """,
         unsafe_allow_html=True,
     )
 
-    # Controls row
-    with st.container():
-        c1, c2 = st.columns([2, 3])
-        with c1:
-            st.markdown("**Filter**")
-            with st.container():
-                st.markdown('<div class="seg-wrap">', unsafe_allow_html=True)
-                choice = st.radio(
-                    "Type",
-                    ["All", "First Visit", "Consultation"],
-                    horizontal=True,
-                    index=0,
-                    label_visibility="collapsed",
-                    key="hist_type_choice",
-                )
-                st.markdown('</div>', unsafe_allow_html=True)
-        with c2:
-            q = st.text_input("Search", placeholder="Search by patient or note…").strip().lower()
+    colL, colR = st.columns([1, 3])
+    with colL:
+        st.markdown('<div class="ah-back">', unsafe_allow_html=True)
+        if st.button("← Back to dashboard", key="ah_back_to_dash"):
+            st.session_state["nav"] = "Dashboard"
+            st.rerun()
+        st.markdown("</div>", unsafe_allow_html=True)
+    with colR:
+        st.markdown("### Appointments History")
 
-    # Load and shape data
+    # filters
+    scope = st.radio("Scope", ["This month", "All past"], horizontal=True, index=0)
+    col1, col2, col3 = st.columns([2, 2, 3])
+    with col1:
+        start_d = st.date_input("Start date", value=None)
+    with col2:
+        end_d = st.date_input("End date", value=None)
+    with col3:
+        q = st.text_input("Search (patient / reason)", placeholder="Type to filter…").strip().lower()
+
+    # data
     appts: List[Dict[str, Any]] = store.list_all_appointments() or []
     now = datetime.now()
 
-    # History only (past)
-    rows = [a for a in appts if _is_past(a, now)]
+    rows: List[Dict[str, Any]] = []
+    for a in appts:
+        dt = _parse(a.get("start", ""))
+        if not dt or dt >= now:
+            continue  # history = past only
 
-    # Category filter
-    if choice != "All":
-        wanted = choice.lower()
-        rows = [a for a in rows if _reason(a).lower() == wanted]
+        if scope == "This month" and not (dt.year == now.year and dt.month == now.month):
+            continue
 
-    # Search within the category
-    if q:
-        rows = [
-            a
-            for a in rows
-            if (q in _patient(a).lower())
-            or (q in _reason(a).lower())
-            or (q in (_fmt_range(a).lower()))
-        ]
+        if start_d and dt.date() < start_d:
+            continue
+        if end_d and dt.date() > end_d:
+            continue
 
-    # newest first
-    rows.sort(key=lambda x: _parse(x.get("start", "")) or datetime.min, reverse=True)
+        blob = f"{a.get('patient_name','')} {a.get('reason','')}".lower()
+        if q and q not in blob:
+            continue
 
-    # Empty state
+        rows.append(a)
+
+    rows.sort(key=lambda x: _parse(x.get("start","")) or datetime.min, reverse=True)
+
     if not rows:
-        st.info("No matching appointments.")
+        st.info("No matching historical appointments.")
         return
 
-    # Render list
     for i, a in enumerate(rows):
-        _history_row(a, i)
-        st.markdown("<div style='height:10px'></div>", unsafe_allow_html=True)
+        _row(a, i)

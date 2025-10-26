@@ -1,0 +1,1195 @@
+{
+  "meta": {
+    "version": "2.0",
+    "seeded": true
+  },
+  "users": [
+    {
+      "id": 1,
+      "name": "LeongWK",
+      "email": "admin@carelog.local",
+      "role": "admin",
+      "locked": false,
+      "pwd": "lwk123",
+      "specialization": "Operations",
+      "bio": "Very handsome admin",
+      "code": "AD1"
+    },
+    {
+      "id": 2,
+      "name": "Li Hang Tai",
+      "email": "pusking@gmail.com",
+      "role": "doctor",
+      "pwd": "ilovelai1314",
+      "locked": false,
+      "specialization": "Urology",
+      "qualifications": "Monash Bachelor of Medical Departments",
+      "availability": [
+        {
+          "day": "Mon",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Wed",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Thu",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Fri",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Sun",
+          "start": "09:00",
+          "end": "17:00"
+        }
+      ],
+      "code": "DC1"
+    },
+    {
+      "id": 3,
+      "name": "MingShun MeiMei",
+      "email": "mssbaby@gmail.com",
+      "role": "nurse",
+      "pwd": "mslovedk123",
+      "locked": false,
+      "specialization": "Head Nurse",
+      "qualifications": "Bachelor of Medical",
+      "availability": [
+        {
+          "day": "Mon",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Tue",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Wed",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Thu",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Fri",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Sat",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Sun",
+          "start": "09:00",
+          "end": "17:00"
+        }
+      ],
+      "code": "NS1"
+    },
+    {
+      "id": 4,
+      "name": "Lim Guo Zhan",
+      "email": "gzlovezs@gmail.com",
+      "role": "doctor",
+      "pwd": "changeme222",
+      "locked": false,
+      "specialization": "Neurology",
+      "qualifications": "Spm",
+      "availability": [
+        {
+          "day": "Mon",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Tue",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Wed",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Thu",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Fri",
+          "start": "09:00",
+          "end": "17:00"
+        }
+      ],
+      "code": "DC2"
+    },
+    {
+      "id": 5,
+      "name": "Mr Kahoot",
+      "email": "kahoot@gmail.com",
+      "role": "staff",
+      "pwd": "abc1234567",
+      "locked": false,
+      "note": "",
+      "must_change_pwd": true,
+      "code": "ST1"
+    },
+    {
+      "id": 6,
+      "name": "Ms Tan",
+      "email": "tan@gmail.com",
+      "role": "staff",
+      "pwd": "LOLO123123",
+      "locked": false,
+      "note": "",
+      "must_change_pwd": true,
+      "code": "ST2"
+    },
+    {
+      "id": 7,
+      "name": "Dr muhammed",
+      "email": "mud@gmail.com",
+      "role": "doctor",
+      "pwd": "muhad2200",
+      "locked": false,
+      "note": "",
+      "must_change_pwd": true,
+      "specialization": "Cardiology",
+      "qualification": "MBBS",
+      "qualifications": "MBBS",
+      "availability": [
+        {
+          "day": "Mon",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Wed",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Fri",
+          "start": "09:00",
+          "end": "17:00"
+        }
+      ],
+      "code": "DC3"
+    },
+    {
+      "id": 8,
+      "name": "Ms Pol",
+      "email": "pol@gmail.com",
+      "role": "nurse",
+      "pwd": "pol101020",
+      "locked": false,
+      "note": "",
+      "must_change_pwd": true,
+      "specialization": "",
+      "qualifications": "",
+      "availability": [
+        {
+          "day": "Mon",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Tue",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Wed",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Thu",
+          "start": "09:00",
+          "end": "17:00"
+        }
+      ],
+      "code": "NS2"
+    },
+    {
+      "id": 9,
+      "code": "ST3",
+      "name": "Ms Mingshun",
+      "email": "mingshun@carelog.local",
+      "role": "staff",
+      "pwd": "gdboy123",
+      "locked": false,
+      "note": "",
+      "must_change_pwd": true,
+      "specialization": "Taking Care of kids",
+      "qualifications": "SPM",
+      "availability": [
+        {
+          "day": "Mon",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Tue",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Wed",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Thu",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Fri",
+          "start": "09:00",
+          "end": "17:00"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "code": "ST4",
+      "name": "Ms LAU",
+      "email": "lau@carelog.local",
+      "role": "staff",
+      "pwd": "lau1234567",
+      "locked": false,
+      "note": "",
+      "must_change_pwd": true,
+      "specialization": "Mazui",
+      "qualifications": "SPM",
+      "availability": [
+        {
+          "day": "Mon",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Tue",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Wed",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Thu",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Fri",
+          "start": "09:00",
+          "end": "17:00"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "code": "PC1",
+      "name": "Dr Min",
+      "email": "min@carelog.local",
+      "role": "psychological_counselor",
+      "pwd": "min(00)00",
+      "locked": false,
+      "note": "",
+      "must_change_pwd": true,
+      "specialization": "Anxiety",
+      "qualifications": "SPM",
+      "availability": [
+        {
+          "day": "Mon",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Wed",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Fri",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Sat",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Sun",
+          "start": "09:00",
+          "end": "17:00"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "code": "DC4",
+      "name": "Dr. David",
+      "email": "david@carelog.local",
+      "role": "doctor",
+      "pwd": "lwlwlwlw10101",
+      "locked": false,
+      "note": "",
+      "must_change_pwd": true,
+      "specialization": "Cardiology",
+      "qualifications": "MRCP",
+      "availability": [
+        {
+          "day": "Mon",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Tue",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Wed",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Thu",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Fri",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Sat",
+          "start": "09:00",
+          "end": "17:00"
+        },
+        {
+          "day": "Sun",
+          "start": "09:00",
+          "end": "17:00"
+        }
+      ]
+    }
+  ],
+  "login_attempts": {
+    "admin@carelog.local": {
+      "fails": 0
+    },
+    "user@example.com": {
+      "fails": 0
+    }
+  },
+  "doctors": [],
+  "nurses": [],
+  "staff": [],
+  "patients": [
+    {
+      "id": 1,
+      "name": "Baka Yaro",
+      "dob": "2025-10-25",
+      "contact": "baka@gmail.com",
+      "notes": "-Kidney deficiency"
+    },
+    {
+      "id": 2,
+      "name": "Lai Yan Cheng",
+      "dob": "2025-10-25",
+      "contact": "ilovelihang@gmail.com",
+      "notes": "kidney disruption"
+    },
+    {
+      "id": 3,
+      "name": "Zishen",
+      "dob": "2015-10-28",
+      "contact": "zishengy@gmail.com",
+      "notes": "Brain disruption"
+    },
+    {
+      "id": 4,
+      "name": "lolopo",
+      "dob": "2025-10-25",
+      "contact": "012345678",
+      "notes": "Burn"
+    },
+    {
+      "id": 5,
+      "name": "haw zhe",
+      "dob": "2025-10-26",
+      "contact": "0199199119",
+      "notes": "Burnout"
+    },
+    {
+      "id": 6,
+      "name": "Jenny",
+      "dob": "2025-10-26",
+      "contact": "012224326",
+      "notes": ""
+    },
+    {
+      "id": 7,
+      "name": "Jenny",
+      "dob": "2025-10-26",
+      "contact": "012224326",
+      "notes": "hand broken"
+    },
+    {
+      "id": 8,
+      "name": "efae",
+      "dob": "2025-10-26",
+      "contact": "ahjbdaj",
+      "notes": "eoujbfcam"
+    }
+  ],
+  "rooms": [
+    {
+      "id": 101,
+      "type": "Consultation",
+      "occupied_by": null,
+      "code": "RM1",
+      "name": "Ward 101",
+      "floor": "1",
+      "capacity": 1,
+      "status": "active",
+      "equipment": [
+        "Ultrasound"
+      ],
+      "note": "",
+      "updated_at": "2025-10-25T11:55:00Z"
+    },
+    {
+      "id": 102,
+      "type": "Ward",
+      "occupied_by": null,
+      "code": "RM2",
+      "name": "Ward 102",
+      "floor": "1",
+      "capacity": 1,
+      "status": "active",
+      "equipment": [
+        "Blood Pressure Monitor"
+      ],
+      "note": "",
+      "updated_at": "2025-10-25T11:57:24Z"
+    },
+    {
+      "id": 201,
+      "type": "ICU",
+      "occupied_by": null,
+      "code": "RMIC 201",
+      "name": "ICU 201",
+      "floor": "2",
+      "capacity": 1,
+      "status": "active",
+      "equipment": [
+        "Ventilators"
+      ],
+      "note": "",
+      "updated_at": "2025-10-25T11:58:48Z"
+    },
+    {
+      "id": 202,
+      "code": "RM3",
+      "name": "Ward 102",
+      "type": "Operating Theatre",
+      "floor": "3",
+      "capacity": 1,
+      "status": "active",
+      "equipment": [
+        "ECG"
+      ],
+      "note": "",
+      "occupied_by": null,
+      "created_at": "2025-10-25T11:56:17Z",
+      "updated_at": "2025-10-25T11:59:48Z"
+    }
+  ],
+  "equipment": [
+    {
+      "id": "EKG-1",
+      "type": "EKG",
+      "in_use": false
+    },
+    {
+      "id": "VENT-1",
+      "type": "Ventilator",
+      "in_use": false
+    }
+  ],
+  "appointments": [
+    {
+      "id": 1,
+      "patient_id": 2,
+      "doctor_id": 2,
+      "start_iso": "2025-10-25T11:22:54.433245Z",
+      "end_iso": "2025-10-25T12:22:54.433950Z",
+      "status": "booked",
+      "created_at": "2025-10-25T02:22:54.435542Z"
+    },
+    {
+      "id": 2,
+      "patient_id": 3,
+      "doctor_id": 2,
+      "start_iso": "2025-10-26T12:55:08.889068Z",
+      "end_iso": "2025-10-26T13:55:08.889579Z",
+      "status": "booked",
+      "created_at": "2025-10-25T03:55:08.890682Z"
+    },
+    {
+      "id": 3,
+      "patient_id": 1,
+      "doctor_id": 4,
+      "start_iso": "2025-10-25T12:57:41.494315Z",
+      "end_iso": "2025-10-25T13:57:41.494861Z",
+      "status": "booked",
+      "created_at": "2025-10-25T03:57:41.495811Z"
+    },
+    {
+      "id": 4,
+      "patient_id": 3,
+      "doctor_id": 2,
+      "room_id": 101,
+      "start_iso": "2025-10-27T13:45Z",
+      "end_iso": "2025-10-27T14:30Z",
+      "status": "booked",
+      "note": "",
+      "created_by": 1,
+      "created_at": "2025-10-25T10:38:40Z"
+    },
+    {
+      "id": 5,
+      "patient_id": 2,
+      "doctor_id": 4,
+      "room_id": 102,
+      "start_iso": "2025-10-27T13:45Z",
+      "end_iso": "2025-10-27T14:30Z",
+      "status": "booked",
+      "note": "",
+      "created_by": 1,
+      "created_at": "2025-10-25T10:39:08Z"
+    },
+    {
+      "id": 6,
+      "patient_id": 4,
+      "doctor_id": 4,
+      "nurse_id": 8,
+      "room_id": 102,
+      "start_iso": "2025-11-04T12:15Z",
+      "end_iso": "2025-11-04T13:00Z",
+      "status": "booked",
+      "note": "",
+      "created_by": 1,
+      "created_at": "2025-10-25T11:28:11Z"
+    },
+    {
+      "id": 7,
+      "patient_id": 4,
+      "doctor_id": 4,
+      "nurse_id": 8,
+      "room_id": 102,
+      "start_iso": "2025-10-30T12:15Z",
+      "end_iso": "2025-10-30T13:00Z",
+      "status": "booked",
+      "note": "",
+      "created_by": 1,
+      "created_at": "2025-10-25T11:28:40Z"
+    },
+    {
+      "id": 8,
+      "patient_id": 5,
+      "doctor_id": 7,
+      "nurse_id": 8,
+      "room_id": 202,
+      "start_iso": "2025-10-27T13:45Z",
+      "end_iso": "2025-10-27T14:30Z",
+      "status": "booked",
+      "note": "",
+      "created_by": 1,
+      "created_at": "2025-10-26T05:07:11Z"
+    },
+    {
+      "id": 9,
+      "patient_id": 5,
+      "doctor_id": 11,
+      "provider_role": "psychological_counselor",
+      "nurse_id": 8,
+      "room_id": 101,
+      "start_iso": "2025-10-29T15:00Z",
+      "end_iso": "2025-10-29T16:00Z",
+      "status": "booked",
+      "note": "",
+      "created_by": 1,
+      "created_at": "2025-10-26T07:46:45Z"
+    },
+    {
+      "id": 10,
+      "patient_id": 1,
+      "doctor_id": 11,
+      "provider_role": "psychological_counselor",
+      "nurse_id": 3,
+      "room_id": 101,
+      "start_iso": "2025-11-01T13:15Z",
+      "end_iso": "2025-11-01T14:15Z",
+      "status": "booked",
+      "note": "",
+      "created_by": 1,
+      "created_at": "2025-10-26T07:52:05Z"
+    },
+    {
+      "id": 11,
+      "patient_id": 4,
+      "doctor_id": 2,
+      "provider_role": "doctor",
+      "nurse_id": 3,
+      "room_id": 101,
+      "start_iso": "2025-10-27T16:30Z",
+      "end_iso": "2025-10-27T17:00Z",
+      "status": "booked",
+      "note": "",
+      "created_by": 1,
+      "created_at": "2025-10-26T08:16:32Z"
+    },
+    {
+      "id": 12,
+      "patient_id": 7,
+      "doctor_id": 12,
+      "provider_role": "doctor",
+      "nurse_id": 3,
+      "room_id": 101,
+      "start_iso": "2025-10-27T11:45Z",
+      "end_iso": "2025-10-27T12:30Z",
+      "status": "booked",
+      "note": "",
+      "created_by": 1,
+      "created_at": "2025-10-26T08:20:21Z"
+    }
+  ],
+  "invoices": [
+    {
+      "id": 1,
+      "patient_id": 2,
+      "items": [
+        {
+          "desc": "",
+          "qty": 1.0,
+          "unit_price": 0.0
+        },
+        {
+          "desc": "",
+          "qty": 1.0,
+          "unit_price": 0.0
+        }
+      ],
+      "total": 150.0,
+      "paid": 150.0,
+      "created_at": "2025-10-25T02:24:54.920595Z",
+      "code": "INV-2025-0001",
+      "doctor_id": null,
+      "appt_id": null,
+      "tax_pct": 0.0,
+      "discount": 0.0,
+      "subtotal": 150.0,
+      "tax": 0.0,
+      "status": "paid",
+      "issued_at": "2025-10-25T12:21:06Z",
+      "paid_at": "2025-10-25T12:23:10Z",
+      "notes": ""
+    },
+    {
+      "id": 2,
+      "patient_id": 2,
+      "items": [
+        {
+          "description": "Consultation",
+          "amount": 1000.0
+        },
+        {
+          "description": "Lab",
+          "amount": 500.0
+        }
+      ],
+      "total": 1500.0,
+      "paid": 1500.0,
+      "created_at": "2025-10-25T02:25:54.657670Z",
+      "code": "INV-2025-0002",
+      "doctor_id": null,
+      "appt_id": null,
+      "tax_pct": 0.0,
+      "discount": 0.0,
+      "subtotal": 0.0,
+      "tax": 0.0,
+      "status": "unpaid",
+      "issued_at": "2025-10-25T12:21:06Z",
+      "paid_at": "",
+      "notes": ""
+    },
+    {
+      "id": 3,
+      "code": "INV-2025-0003",
+      "patient_id": 3,
+      "doctor_id": 7,
+      "appt_id": 2,
+      "items": [
+        {
+          "desc": "consultation",
+          "qty": 1.0,
+          "unit_price": 150.0
+        }
+      ],
+      "tax_pct": 10.0,
+      "discount": 10.0,
+      "subtotal": 150.0,
+      "tax": 15.0,
+      "total": 155.0,
+      "status": "void",
+      "issued_at": "2025-10-25T12:25:36Z",
+      "paid_at": "",
+      "notes": "",
+      "created_by": 1
+    },
+    {
+      "id": 4,
+      "code": "INV-2025-0004",
+      "patient_id": 1,
+      "doctor_id": 4,
+      "appt_id": 3,
+      "items": [
+        {
+          "desc": "narcotics",
+          "qty": 1.0,
+          "unit_price": 200.0
+        },
+        {
+          "desc": "painkiller",
+          "qty": 2.0,
+          "unit_price": 50.0
+        }
+      ],
+      "tax_pct": 10.0,
+      "discount": 20.0,
+      "subtotal": 300.0,
+      "tax": 30.0,
+      "total": 310.0,
+      "status": "paid",
+      "issued_at": "2025-10-25T12:33:39Z",
+      "paid_at": "2025-10-25T12:34:24Z",
+      "notes": "",
+      "created_by": 1
+    },
+    {
+      "id": 5,
+      "code": "INV-2025-0005",
+      "patient_id": 1,
+      "doctor_id": 2,
+      "appt_id": 3,
+      "items": [
+        {
+          "desc": "",
+          "qty": 1.0,
+          "unit_price": 0.0
+        }
+      ],
+      "tax_pct": 0.0,
+      "discount": 0.0,
+      "subtotal": 0.0,
+      "tax": 0.0,
+      "total": 0.0,
+      "status": "paid",
+      "issued_at": "2025-10-26T05:13:12Z",
+      "paid_at": "2025-10-26T05:14:19Z",
+      "notes": "",
+      "created_by": 1
+    },
+    {
+      "id": 6,
+      "code": "INV-2025-0006",
+      "patient_id": 1,
+      "doctor_id": 4,
+      "appt_id": 3,
+      "items": [
+        {
+          "desc": "painkiller",
+          "qty": 2.0,
+          "unit_price": 50.0
+        }
+      ],
+      "tax_pct": 10.0,
+      "discount": 20.0,
+      "subtotal": 100.0,
+      "tax": 10.0,
+      "total": 90.0,
+      "status": "unpaid",
+      "issued_at": "2025-10-26T05:13:49Z",
+      "paid_at": "",
+      "notes": "",
+      "created_by": 1
+    },
+    {
+      "id": 7,
+      "code": "INV-2025-0007",
+      "patient_id": 1,
+      "doctor_id": 11,
+      "appt_id": 10,
+      "items": [
+        {
+          "desc": "consultation",
+          "qty": 1.0,
+          "unit_price": 100.0
+        },
+        {
+          "desc": "hypnotic",
+          "qty": 1.0,
+          "unit_price": 200.0
+        }
+      ],
+      "tax_pct": 0.0,
+      "discount": 0.0,
+      "subtotal": 300.0,
+      "tax": 0.0,
+      "total": 300.0,
+      "status": "paid",
+      "issued_at": "2025-10-26T08:07:26Z",
+      "paid_at": "2025-10-26T08:07:54Z",
+      "notes": "",
+      "created_by": 1
+    },
+    {
+      "id": 8,
+      "code": "INV-2025-0008",
+      "patient_id": 4,
+      "doctor_id": 2,
+      "appt_id": 11,
+      "items": [
+        {
+          "desc": "painkiller",
+          "qty": 1.0,
+          "unit_price": 150.0
+        }
+      ],
+      "tax_pct": 0.0,
+      "discount": 0.0,
+      "subtotal": 150.0,
+      "tax": 0.0,
+      "total": 150.0,
+      "status": "paid",
+      "issued_at": "2025-10-26T08:17:06Z",
+      "paid_at": "2025-10-26T08:17:14Z",
+      "notes": "",
+      "created_by": 1
+    },
+    {
+      "id": 9,
+      "code": "INV-2025-0009",
+      "patient_id": 7,
+      "doctor_id": 12,
+      "appt_id": 12,
+      "items": [
+        {
+          "desc": "painkiller",
+          "qty": 1.0,
+          "unit_price": 400.0
+        }
+      ],
+      "tax_pct": 0.0,
+      "discount": 0.0,
+      "subtotal": 400.0,
+      "tax": 0.0,
+      "total": 400.0,
+      "status": "paid",
+      "issued_at": "2025-10-26T08:20:52Z",
+      "paid_at": "2025-10-26T08:20:59Z",
+      "notes": "",
+      "created_by": 1
+    }
+  ],
+  "alerts": [
+    {
+      "id": 1,
+      "audience": "all",
+      "text": "Emergency code blue in ICU2",
+      "created_at": "2025-10-25T02:29:07.032655Z"
+    },
+    {
+      "id": 2,
+      "from_id": 1,
+      "to_ids": [
+        2,
+        3
+      ],
+      "subject": "Blue alert",
+      "body": "A burned victim",
+      "priority": "critical",
+      "ack_required": false,
+      "created_at": "2025-10-25T12:47:12Z",
+      "read_by": [],
+      "acks": []
+    },
+    {
+      "id": 3,
+      "from_id": 1,
+      "to_ids": [
+        2,
+        3,
+        1
+      ],
+      "subject": "Blue alert",
+      "body": "A burned victim",
+      "priority": "critical",
+      "ack_required": false,
+      "created_at": "2025-10-25T12:47:32Z",
+      "read_by": [
+        1
+      ],
+      "acks": []
+    },
+    {
+      "id": 4,
+      "from_id": 1,
+      "to_ids": [
+        5,
+        3,
+        7
+      ],
+      "subject": "YOU ARE FIRED",
+      "body": "Why u eat kfc infront of a patient who has gastroenteritis",
+      "priority": "critical",
+      "ack_required": false,
+      "created_at": "2025-10-26T05:23:05Z",
+      "read_by": [],
+      "acks": []
+    },
+    {
+      "id": 5,
+      "from_id": 1,
+      "to_ids": [
+        5,
+        3,
+        7
+      ],
+      "subject": "YOU ARE FIRED",
+      "body": "Why u eat kfc infront of a patient who has gastroenteritis",
+      "priority": "critical",
+      "ack_required": true,
+      "created_at": "2025-10-26T05:23:18Z",
+      "read_by": [],
+      "acks": []
+    },
+    {
+      "id": 6,
+      "from_id": 1,
+      "to_ids": [
+        5,
+        3,
+        7,
+        1
+      ],
+      "subject": "YOU ARE FIRED",
+      "body": "Why u eat kfc infront of a patient who has gastroenteritis",
+      "priority": "critical",
+      "ack_required": true,
+      "created_at": "2025-10-26T05:23:28Z",
+      "read_by": [
+        1
+      ],
+      "acks": [
+        1
+      ]
+    },
+    {
+      "id": 7,
+      "from_id": 1,
+      "to_ids": [
+        5,
+        3,
+        7,
+        1
+      ],
+      "subject": "NOOOO",
+      "body": "Why u eat kfc infront of a patient who has gastroenteritis",
+      "priority": "critical",
+      "ack_required": true,
+      "created_at": "2025-10-26T05:23:53Z",
+      "read_by": [
+        1
+      ],
+      "acks": [
+        1
+      ]
+    },
+    {
+      "id": 8,
+      "from_id": 1,
+      "to_ids": [
+        5,
+        3,
+        7,
+        1
+      ],
+      "subject": "NOOOO",
+      "body": "Why u eat kfc infront of a patient who has gastroenteritis",
+      "priority": "critical",
+      "ack_required": false,
+      "created_at": "2025-10-26T05:24:05Z",
+      "read_by": [
+        1
+      ],
+      "acks": []
+    }
+  ],
+  "messages": [
+    {
+      "id": 1,
+      "from_id": 1,
+      "to_id": 2,
+      "text": "good boy",
+      "ts": "2025-10-25T03:10:05Z",
+      "read": false
+    },
+    {
+      "id": 2,
+      "from_id": 2,
+      "to_id": 1,
+      "text": "Hi Admin, this is Li Hang Tai replying for test.",
+      "ts": "2025-10-25T03:16:40Z",
+      "read": true
+    },
+    {
+      "id": 3,
+      "from_id": 1,
+      "to_id": 2,
+      "text": "kssk",
+      "ts": "2025-10-25T03:16:48Z",
+      "read": false
+    },
+    {
+      "id": 4,
+      "from_id": 2,
+      "to_id": 1,
+      "text": "Hi Admin, this is Li Hang Tai replying for test.",
+      "ts": "2025-10-25T03:16:50Z",
+      "read": true
+    },
+    {
+      "id": 5,
+      "from_id": 1,
+      "to_id": 3,
+      "text": "what are u doing, mingshun meimei",
+      "ts": "2025-10-25T03:26:54Z",
+      "read": false
+    },
+    {
+      "id": 6,
+      "from_id": 3,
+      "to_id": 1,
+      "text": "Hi Admin, this is MingShun MeiMei replying for test.",
+      "ts": "2025-10-25T03:26:56Z",
+      "read": true
+    },
+    {
+      "id": 7,
+      "from_id": 1,
+      "to_id": 3,
+      "text": "good boy",
+      "ts": "2025-10-25T03:36:39Z",
+      "read": false
+    },
+    {
+      "id": 8,
+      "from_id": 1,
+      "to_id": 2,
+      "text": "wohoooo",
+      "ts": "2025-10-25T12:02:43+08:00",
+      "read": false
+    },
+    {
+      "id": 9,
+      "from_id": 2,
+      "to_id": 1,
+      "text": "Hi Admin, this is Li Hang Tai replying for test.",
+      "ts": "2025-10-25T12:02:46+08:00",
+      "read": true
+    },
+    {
+      "id": 10,
+      "from_id": 1,
+      "to_id": 3,
+      "text": "s",
+      "ts": "2025-10-26T08:42:43+08:00",
+      "read": false
+    },
+    {
+      "id": 11,
+      "from_id": 1,
+      "to_id": 3,
+      "text": "scsa",
+      "ts": "2025-10-26T08:42:48+08:00",
+      "read": false
+    },
+    {
+      "id": 12,
+      "from_id": 3,
+      "to_id": 1,
+      "text": "Hi LeongWK, this is MingShun MeiMei replying for test.",
+      "ts": "2025-10-26T08:42:50+08:00",
+      "read": true
+    },
+    {
+      "id": 13,
+      "from_id": 2,
+      "to_id": 1,
+      "text": "Hi LeongWK, this is Li Hang Tai replying for test.",
+      "ts": "2025-10-26T08:51:57+08:00",
+      "read": true
+    },
+    {
+      "id": 14,
+      "from_id": 1,
+      "to_id": 11,
+      "text": "Halo Counselor, you have a new patient",
+      "ts": "2025-10-26T15:23:45+08:00",
+      "read": false
+    },
+    {
+      "id": 15,
+      "from_id": 11,
+      "to_id": 1,
+      "text": "Hi LeongWK, this is Dr Min replying for test.",
+      "ts": "2025-10-26T15:23:47+08:00",
+      "read": true
+    },
+    {
+      "id": 16,
+      "from_id": 1,
+      "to_id": 11,
+      "text": "ijiji",
+      "ts": "2025-10-26T15:26:00+08:00",
+      "read": false
+    }
+  ]
+}

@@ -50,10 +50,8 @@ def _load_patients_for_me() -> List[Dict[str, Any]]:
     if not me_id:
         return pts
     return [
-        p
-        for p in pts
-        if (me_id in p.get("assigned_doctor_ids", []))
-        or p.get("consent_to_all_doctors", False)
+        p for p in pts
+        if (me_id in p.get("assigned_doctor_ids", [])) or p.get("consent_to_all_doctors", False)
     ]
 
 def _get_patient(pid: str) -> Optional[Dict[str, Any]]:
@@ -63,7 +61,6 @@ def _get_patient(pid: str) -> Optional[Dict[str, Any]]:
     return None
 
 def _save_patient(updated: Dict[str, Any]) -> None:
-    """Write back to patients.json by replacing the matching id."""
     pts = _read_json(FILES["patients"], [])
     for i, p in enumerate(pts):
         if isinstance(p, dict) and p.get("id") == updated.get("id"):
@@ -86,11 +83,8 @@ def _encounters_for_patient(pid: str) -> List[Dict[str, Any]]:
     rows = [e for e in encs if isinstance(e, dict) and e.get("patient_id") == pid]
 
     def _when(e):
-        return (
-            _parse(e.get("timestamp", "") or e.get("created_at", ""))
-            or _parse((e.get("versions") or [{}])[-1].get("timestamp", ""))
-        )
-
+        return (_parse(e.get("timestamp", "") or e.get("created_at", "")) or
+                _parse((e.get("versions") or [{}])[-1].get("timestamp", "")))
     rows.sort(key=lambda e: _when(e) or datetime.min, reverse=True)
     return rows
 
@@ -119,7 +113,6 @@ def _metric_box(value: str, label: str) -> str:
     )
 
 def _patient_row(p: Dict[str, Any], i: int) -> bool:
-    """Left list row (returns True if clicked)."""
     st.markdown(
         """
         <style>
@@ -173,19 +166,12 @@ def _card_header(p: Dict[str, Any]) -> None:
 
 # ----------------------------- COM-CARD -----------------------------
 def _patient_comcard(p: Dict[str, Any]):
-    """Full “com-card” with clearer tabs and prescription versioning."""
-    # — Make tabs clearer/brighter —
     st.markdown(
         """
         <style>
-        .stTabs [role="tab"] {
-            color:#DCEBFF !important;
-            font-weight:600;
-            padding:8px 14px;
-        }
+        .stTabs [role="tab"] { color:#DCEBFF !important; font-weight:600; padding:8px 14px; }
         .stTabs [role="tab"][aria-selected="true"] {
-            color:#FFFFFF !important;
-            border-bottom:2px solid #ff5c5c !important;
+            color:#FFFFFF !important; border-bottom:2px solid #ff5c5c !important;
             background:rgba(255,255,255,0.04);
         }
         </style>
@@ -201,111 +187,31 @@ def _patient_comcard(p: Dict[str, Any]):
         encs  = _encounters_for_patient(p["id"])
 
         c1, c2, c3 = st.columns(3)
-        with c1:
-            st.markdown(
-                _metric_box(str(len(p.get("conditions", []))), "Conditions"),
-                unsafe_allow_html=True,
-            )
-        with c2:
-            st.markdown(_metric_box(str(len(encs)), "Encounters"), unsafe_allow_html=True)
-        with c3:
-            st.markdown(_metric_box(str(len(appts)), "Appointments"), unsafe_allow_html=True)
+        with c1: st.markdown(_metric_box(str(len(p.get("conditions", []))), "Conditions"), unsafe_allow_html=True)
+        with c2: st.markdown(_metric_box(str(len(encs)), "Encounters"), unsafe_allow_html=True)
+        with c3: st.markdown(_metric_box(str(len(appts)), "Appointments"), unsafe_allow_html=True)
 
         _divider()
 
         tabs = st.tabs(["Overview", "Medical record", "Visits", "Encounters", "Files"])
 
-        # ------------ Overview ------------
+        # Overview
         with tabs[0]:
             colA, colB = st.columns(2)
             with colA:
-                st.markdown(_bold("Contact"), unsafe_allow_html=True)
-                st.write(p.get("contact", "—"))
+                st.markdown(_bold("Contact"), unsafe_allow_html=True); st.write(p.get("contact", "—"))
                 st.markdown(_bold("Consent"), unsafe_allow_html=True)
-                st.write(
-                    "Consented to all doctors"
-                    if p.get("consent_to_all_doctors")
-                    else "Assigned only"
-                )
+                st.write("Consented to all doctors" if p.get("consent_to_all_doctors") else "Assigned only")
             with colB:
                 st.markdown(_bold("Allergies"), unsafe_allow_html=True)
                 st.write(", ".join(p.get("allergies", [])) or "—")
                 st.markdown(_bold("Current Medications"), unsafe_allow_html=True)
                 st.write(", ".join(p.get("medications", [])) or "—")
 
-        # ------------ Medical Record + Prescribe (versioned) ------------
+        # Medical record + Prescribe (versioned)
         with tabs[1]:
             st.markdown("### Medical record")
 
-            # 1) Prescribe FIRST -> then render list so it appears immediately.
-            with st.expander("➕ Prescribe treatment", expanded=False):
-                with st.form(key=f"rx_form_{p['id']}", clear_on_submit=True):
-                    st.caption(
-                        "Add one item and save to create a new version (you can add more later)."
-                    )
-
-                    c1, c2 = st.columns([3, 2])
-                    with c1:
-                        drug = st.text_input(
-                            "Medication",
-                            placeholder="e.g., Amlodipine 5 mg",
-                            key=f"rx_drug_{p['id']}",
-                        )
-                        dose = st.text_input(
-                            "Dose", placeholder="e.g., 5 mg", key=f"rx_dose_{p['id']}"
-                        )
-                        freq = st.text_input(
-                            "Frequency",
-                            placeholder="e.g., OD / BID / TDS",
-                            key=f"rx_freq_{p['id']}",
-                        )
-                    with c2:
-                        duration = st.text_input(
-                            "Duration",
-                            placeholder="e.g., 14 days",
-                            key=f"rx_dur_{p['id']}",
-                        )
-                        notes = st.text_area(
-                            "Notes",
-                            placeholder="Any extra instruction",
-                            key=f"rx_notes_{p['id']}",
-                        )
-
-                    save_rx = st.form_submit_button(
-                        "Save prescription", use_container_width=True
-                    )
-
-                    if save_rx:
-                        if not (drug or "").strip():
-                            st.warning("Medication name is required.")
-                        else:
-                            me = current_doctor() or {}
-                            new_entry = {
-                                "timestamp": datetime.now().isoformat(),
-                                "author": {
-                                    "id": me.get("id"),
-                                    "name": me.get("email") or "Doctor",
-                                },
-                                "items": [
-                                    {
-                                        "drug": drug.strip(),
-                                        "dose": (dose or "").strip() or None,
-                                        "frequency": (freq or "").strip() or None,
-                                        "duration": (duration or "").strip() or None,
-                                    }
-                                ],
-                                "notes": (notes or "").strip() or None,
-                            }
-
-                            # Append (versioning), don't overwrite
-                            treatments = list(p.get("treatments", []))
-                            treatments.append(new_entry)
-                            p["treatments"] = treatments  # update in-memory so it renders now
-                            _save_patient(p)              # persist to disk
-
-                            st.toast("Prescription saved ✅", icon="✅")
-
-            # 2) Then render Conditions/History + Treatment list
             st.markdown(_bold("Conditions"), unsafe_allow_html=True)
             if p.get("conditions"):
                 for c in p["conditions"]:
@@ -327,7 +233,7 @@ def _patient_comcard(p: Dict[str, Any]):
             if not treatments:
                 st.caption("No treatment prescribed yet.")
             else:
-                for t in reversed(treatments):  # newest first
+                for t in reversed(treatments):
                     ts = _parse(t.get("timestamp", "")) or datetime.min
                     author = t.get("author", {})
                     who = author.get("name") or author.get("id") or "Unknown"
@@ -338,68 +244,93 @@ def _patient_comcard(p: Dict[str, Any]):
                         if meds:
                             for m in meds:
                                 line = f"- {m.get('drug','(drug)')}"
-                                if m.get("dose"):
-                                    line += f", {m['dose']}"
-                                if m.get("frequency"):
-                                    line += f", {m['frequency']}"
-                                if m.get("duration"):
-                                    line += f", {m['duration']}"
+                                if m.get("dose"):      line += f", {m['dose']}"
+                                if m.get("frequency"): line += f", {m['frequency']}"
+                                if m.get("duration"):  line += f", {m['duration']}"
                                 st.markdown(line)
                         if t.get("notes"):
                             st.caption(t["notes"])
 
-        # ------------ Visits ------------
+            _divider(12)
+
+            with st.expander("➕ Prescribe treatment", expanded=False):
+                with st.form(key=f"rx_form_{p['id']}", clear_on_submit=True):
+                    st.caption("Add one item and save to create a new version (you can add more later).")
+
+                    c1, c2 = st.columns([3, 2])
+                    with c1:
+                        drug = st.text_input("Medication", placeholder="e.g., Amlodipine 5 mg", key=f"rx_drug_{p['id']}")
+                        dose = st.text_input("Dose", placeholder="e.g., 5 mg", key=f"rx_dose_{p['id']}")
+                        freq = st.text_input("Frequency", placeholder="e.g., OD / BID / TDS", key=f"rx_freq_{p['id']}")
+                    with c2:
+                        duration = st.text_input("Duration", placeholder="e.g., 14 days", key=f"rx_dur_{p['id']}")
+                        notes = st.text_area("Notes", placeholder="Any extra instruction", key=f"rx_notes_{p['id']}")
+
+                    save_rx = st.form_submit_button("Save prescription", use_container_width=True)
+
+                    if save_rx:
+                        if not (drug or "").strip():
+                            st.warning("Medication name is required.")
+                        else:
+                            me = current_doctor() or {}
+                            new_entry = {
+                                "timestamp": datetime.now().isoformat(),
+                                "author": {"id": me.get("id"), "name": me.get("email") or "Doctor"},
+                                "items": [{
+                                    "drug": drug.strip(),
+                                    "dose": (dose or "").strip() or None,
+                                    "frequency": (freq or "").strip() or None,
+                                    "duration": (duration or "").strip() or None,
+                                }],
+                                "notes": (notes or "").strip() or None,
+                            }
+                            treatments = list(p.get("treatments", []))
+                            treatments.append(new_entry)
+                            p["treatments"] = treatments
+                            _save_patient(p)
+                            st.toast("Prescription saved ✅", icon="✅")
+                            st.rerun()
+
+        # Visits
         with tabs[2]:
             appts = _appointments_for_patient(p["id"])
             if not appts:
                 st.caption("No appointments.")
             else:
                 for a in appts:
-                    s = _parse(a.get("start", ""))
-                    e = _parse(a.get("end", ""))
+                    s = _parse(a.get("start", "")); e = _parse(a.get("end", ""))
                     line = f"{_date(s)} • {_hm(s)}"
-                    if e:
-                        line += f" – {_hm(e)}"
+                    if e: line += f" – {_hm(e)}"
                     reason = (a.get("reason") or "Consultation").title()
                     with st.container(border=True):
                         st.markdown(f"**{reason}**")
                         st.caption(line)
-                        if st.button(
-                            "Open",
-                            key=f"pt_open_appt_{a.get('id', id(a))}",
-                            type="secondary",
-                        ):
+                        if st.button("Open", key=f"pt_open_appt_{a.get('id', id(a))}", type="secondary"):
                             st.session_state["selected_appt_id"] = a.get("id")
                             st.session_state["nav"] = "Appointments"
                             st.session_state["_route_push"] = True
                             st.rerun()
 
-        # ------------ Encounters ------------
+        # Encounters
         with tabs[3]:
             encs = _encounters_for_patient(p["id"])
             if not encs:
                 st.caption("No encounters.")
             else:
                 for e in encs:
-                    when = (
-                        _parse(e.get("timestamp", "") or e.get("created_at", ""))
-                        or _parse((e.get("versions") or [{}])[-1].get("timestamp", ""))
-                    )
+                    when = (_parse(e.get("timestamp", "") or e.get("created_at", "")) or
+                            _parse((e.get("versions") or [{}])[-1].get("timestamp", "")))
                     title = e.get("title") or e.get("type") or "Encounter"
                     with st.container(border=True):
                         st.markdown(f"**{title}**")
                         st.caption(_date(when) if when else "—")
-                        if st.button(
-                            "Open",
-                            key=f"pt_open_enc_{e.get('id', id(e))}",
-                            type="secondary",
-                        ):
+                        if st.button("Open", key=f"pt_open_enc_{e.get('id', id(e))}", type="secondary"):
                             st.session_state["selected_encounter_id"] = e.get("id")
                             st.session_state["nav"] = "Encounters"
                             st.session_state["_route_push"] = True
                             st.rerun()
 
-        # ------------ Files ------------
+        # Files
         with tabs[4]:
             files = p.get("uploads") or []
             if not files:
@@ -409,13 +340,8 @@ def _patient_comcard(p: Dict[str, Any]):
                     with st.container(border=True):
                         st.write(f)
 
-# ----------------------------- page (two states) -----------------------------
+# ----------------------------- page -----------------------------
 def page_patients(store=None):
-    """
-    Two-state Patients page:
-      • LIST mode: search + list (left), preview card (right)
-      • DETAIL mode: only the full com-card + 'Back to patient list' button
-    """
     st.markdown("### Patients")
 
     if "patients_mode" not in st.session_state:
@@ -426,7 +352,6 @@ def page_patients(store=None):
 
     mode = st.session_state["patients_mode"]
 
-    # ---------- DETAIL MODE ----------
     if mode == "detail":
         pid = st.session_state.get("selected_patient_id")
         p = _get_patient(pid) if pid else None
@@ -437,8 +362,6 @@ def page_patients(store=None):
 
         _patient_comcard(p)
         _divider(12)
-
-        # back button
         st.markdown(
             """
             <style>
@@ -456,30 +379,24 @@ def page_patients(store=None):
         if st.button("← Back to patient list", key="pt_back_to_list"):
             st.session_state["patients_mode"] = "list"
             st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
         return
 
-    # ---------- LIST MODE ----------
+    # LIST MODE
     left, right = st.columns([5, 7], gap="large")
 
     with left:
         st.markdown("**Your Patients**")
-        q = st.text_input(
-            "Search", placeholder="Search by name, contact or condition…"
-        ).strip().lower()
+        q = st.text_input("Search", placeholder="Search by name, contact or condition…").strip().lower()
 
         pts = _load_patients_for_me()
         if q:
             def blob(p):
-                return " ".join(
-                    [
-                        p.get("name", ""),
-                        p.get("contact", ""),
-                        " ".join(p.get("conditions", [])),
-                        " ".join(p.get("allergies", [])),
-                    ]
-                ).lower()
-
+                return " ".join([
+                    p.get("name",""), p.get("contact",""),
+                    " ".join(p.get("conditions",[])),
+                    " ".join(p.get("allergies",[])),
+                ]).lower()
             pts = [p for p in pts if q in blob(p)]
 
         if not pts:
@@ -491,11 +408,11 @@ def page_patients(store=None):
                     st.session_state["selected_patient_id"] = p.get("id")
                     st.session_state["patients_mode"] = "detail"
                     st.rerun()
-            st.markdown("</div>", unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
 
     with right:
         pid = st.session_state.get("selected_patient_id")
-        p = _get_patient(pid) if pid else (pts[0] if "pts" in locals() and pts else None)
+        p = _get_patient(pid) if pid else (pts[0] if 'pts' in locals() and pts else None)
         if not p:
             st.info("Select a patient to view details.")
             return
