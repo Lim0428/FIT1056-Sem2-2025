@@ -1,0 +1,363 @@
+{
+  "users": {
+    "C0001": {
+      "id": "C0001",
+      "name": "Aisha Wong",
+      "email": "aisha@medilink.example",
+      "license": "CN-45821",
+      "specialties": [
+        "Anxiety",
+        "Depression"
+      ],
+      "hours": "Mon 09:00-17:00, Tue 09:00-17:00, Wed 09:00-17:00, Thu 09:00-17:00, Fri 09:00-17:00",
+      "contact": "+60 12-345 6789",
+      "password": "password123",
+      "failed": 3,
+      "locked": true,
+      "bio": "",
+      "hours_detail": {
+        "Mon": {
+          "on": true,
+          "start": "09:00",
+          "end": "17:00"
+        },
+        "Tue": {
+          "on": true,
+          "start": "09:00",
+          "end": "17:00"
+        },
+        "Wed": {
+          "on": true,
+          "start": "09:00",
+          "end": "17:00"
+        },
+        "Thu": {
+          "on": true,
+          "start": "09:00",
+          "end": "17:00"
+        },
+        "Fri": {
+          "on": true,
+          "start": "09:00",
+          "end": "17:00"
+        },
+        "Sat": {
+          "on": false,
+          "start": "09:00",
+          "end": "17:00"
+        },
+        "Sun": {
+          "on": false,
+          "start": "09:00",
+          "end": "17:00"
+        }
+      },
+      "preferences": {
+        "email_notifications": true,
+        "desktop_notifications": false,
+        "show_patient_ids": true
+      }
+    }
+  },
+  "patients": {
+    "P0001": {
+      "id": "P0001",
+      "name": "Nicole Tan",
+      "dob": "1960-02-19",
+      "assigned_counselor": "C0001",
+      "language": "EN",
+      "risk_flags": [
+        "falls"
+      ],
+      "allergies": [
+        "Penicillin"
+      ]
+    }
+  },
+  "appointments": {
+    "A-ca9657d2": {
+      "id": "A-ca9657d2",
+      "patient_id": "P0001",
+      "counselor_id": "C0001",
+      "start": "2025-10-26T12:15:00",
+      "end": "2025-10-26T13:45:00",
+      "kind": "Individual",
+      "status": "Booked"
+    }
+  },
+  "notes": {},
+  "safety_plans": {
+    "P0001": [
+      {
+        "id": "SP-2ab39d8b",
+        "patient_id": "P0001",
+        "counselor_id": "C0001",
+        "version": 1,
+        "created_ts": "2025-10-26T12:02:45",
+        "updated_ts": "2025-10-26T12:02:45",
+        "content": {
+          "warning_signs": [
+            "suicide"
+          ],
+          "internal_coping": [
+            "n"
+          ],
+          "distractions": [
+            "sjn"
+          ],
+          "support_contacts": [
+            {
+              "name": "lwk",
+              "relationship": "father",
+              "phone": "012345678"
+            }
+          ],
+          "professional_contacts": [
+            {
+              "service": "Counselor",
+              "name": "aisha",
+              "phone": "01122334455"
+            },
+            {
+              "service": "Clinic / GP",
+              "name": "",
+              "phone": ""
+            },
+            {
+              "service": "Emergency",
+              "name": "999 / 112",
+              "phone": ""
+            },
+            {
+              "service": "Crisis Line",
+              "name": "Talian Kasih 15999",
+              "phone": ""
+            }
+          ],
+          "means_restriction": "remove sharps",
+          "reasons_for_living": "pets",
+          "crisis_steps": [],
+          "environment": "with parents",
+          "shared": {
+            "patient": false,
+            "care_team": true
+          }
+        },
+        "shared": {
+          "patient": false,
+          "care_team": true
+        }
+      },
+      {
+        "id": "SP-f9badf9f",
+        "patient_id": "P0001",
+        "counselor_id": "C0001",
+        "version": 2,
+        "created_ts": "2025-10-26T12:03:25",
+        "updated_ts": "2025-10-26T12:03:25",
+        "content": {
+          "warning_signs": [
+            "suicide"
+          ],
+          "internal_coping": [
+            "n"
+          ],
+          "distractions": [
+            "sjn"
+          ],
+          "support_contacts": [
+            {
+              "name": "lwk",
+              "relationship": "father",
+              "phone": "012345678"
+            }
+          ],
+          "professional_contacts": [
+            {
+              "service": "Counselor",
+              "name": "aisha",
+              "phone": "01122334455"
+            },
+            {
+              "service": "Clinic / GP",
+              "name": "",
+              "phone": ""
+            },
+            {
+              "service": "Emergency",
+              "name": "999 / 112",
+              "phone": ""
+            },
+            {
+              "service": "Crisis Line",
+              "name": "Talian Kasih 15999",
+              "phone": ""
+            }
+          ],
+          "means_restriction": "remove sharps",
+          "reasons_for_living": "pets",
+          "crisis_steps": [],
+          "environment": "with parents",
+          "shared": {
+            "patient": false,
+            "care_team": true
+          }
+        },
+        "shared": {
+          "patient": false,
+          "care_team": true
+        }
+      }
+    ]
+  },
+  "messages": {
+    "T-54baa83e": {
+      "title": "patient:P0001",
+      "members": [
+        "C0001",
+        "P0001"
+      ],
+      "items": [
+        {
+          "by": "P0001",
+          "text": "Acknowledged. Thanks for the update!",
+          "ts": "2025-10-26T11:03:49"
+        },
+        {
+          "by": "C0001",
+          "text": "ou",
+          "ts": "2025-10-26T12:03:52"
+        }
+      ],
+      "reads": {
+        "C0001": 2
+      }
+    },
+    "T-172bf93c": {
+      "title": "Conversation",
+      "members": [
+        "C0001",
+        "P0001"
+      ],
+      "items": [
+        {
+          "by": "C0001",
+          "text": "ddok",
+          "ts": "2025-10-26T12:04:00"
+        }
+      ],
+      "reads": {
+        "C0001": 1
+      }
+    },
+    "T-c44bbd98": {
+      "title": "Good Morning",
+      "members": [
+        "C0001",
+        "P0001"
+      ],
+      "items": [
+        {
+          "by": "C0001",
+          "text": "This  Friday you have to come consultation.",
+          "ts": "2025-10-26T12:11:43"
+        },
+        {
+          "by": "C0001",
+          "text": "Acknowledged. Thanks for the update.",
+          "ts": "2025-10-26T12:11:54"
+        },
+        {
+          "by": "C0001",
+          "text": "pls come ah",
+          "ts": "2025-10-26T12:12:05"
+        },
+        {
+          "by": "P0001",
+          "text": "Received. We will get back to you shortly.",
+          "ts": "2025-10-26T12:12:08"
+        },
+        {
+          "by": "C0001",
+          "text": "halo",
+          "ts": "2025-10-26T12:24:18"
+        },
+        {
+          "by": "P0001",
+          "text": "Acknowledged. Thanks for the update!",
+          "ts": "2025-10-26T12:24:21"
+        },
+        {
+          "by": "P0001",
+          "text": "Acknowledged. Thanks for the update!",
+          "ts": "2025-10-26T12:24:24"
+        },
+        {
+          "by": "C0001",
+          "text": "wds",
+          "ts": "2025-10-26T12:32:20"
+        },
+        {
+          "by": "P0001",
+          "text": "Acknowledged. Thanks for the update!",
+          "ts": "2025-10-26T12:32:23"
+        }
+      ],
+      "reads": {
+        "C0001": 8,
+        "P0001": 9
+      }
+    }
+  },
+  "consent": {
+    "P0001": {
+      "C0001": true
+    }
+  },
+  "assessments": {
+    "P0001": [
+      {
+        "tool": "PHQ-9",
+        "score": 21,
+        "band": "Severe",
+        "severity": "bad",
+        "guidance": "Immediate treatment; consider urgent evaluation.",
+        "by": "C0001"
+      },
+      {
+        "tool": "GAD-7",
+        "score": 14,
+        "band": "Moderate",
+        "severity": "warn",
+        "guidance": "Consider counseling; develop treatment plan.",
+        "by": "C0001"
+      }
+    ]
+  },
+  "audit": [
+    {
+      "event": "safety_plan_create",
+      "patient": "P0001",
+      "by": "C0001",
+      "sp": "SP-f35f30a9"
+    },
+    {
+      "event": "safety_plan_delete",
+      "patient": "P0001",
+      "sp": "SP-f35f30a9"
+    },
+    {
+      "event": "safety_plan_create",
+      "patient": "P0001",
+      "by": "C0001",
+      "sp": "SP-2ab39d8b"
+    },
+    {
+      "event": "safety_plan_update",
+      "patient": "P0001",
+      "by": "C0001",
+      "from": "SP-2ab39d8b",
+      "to": "SP-f9badf9f"
+    }
+  ]
+}
