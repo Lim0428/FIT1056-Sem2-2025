@@ -6,7 +6,8 @@ from typing import List
 import streamlit as st
 from components.ui import apply_theme, page_header, card  # no require_auth
 from components.staff_shared import pick_staff_and_patient
-from app.medical_staff import MedicalStaffService
+from app.medical_staff_service import MedicalStaffService
+
 
 # ---------- Page setup ----------
 st.set_page_config(page_title="Tasks", page_icon="✅", layout="wide")

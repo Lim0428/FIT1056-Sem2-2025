@@ -1,23 +1,10 @@
 import streamlit as st
 from components.ui import apply_theme, page_header, card, divider
 from app.auth import AuthService, LoginError
-from app.i18n import i18n_controls, show_status_badge, language_bar
+
 
 st.set_page_config(page_title="CareLog Patient", page_icon="🩺", layout="wide")
-apply_theme()
-language_bar()       # 🔹 NEW
-show_status_badge()
-with st.sidebar:
-    st.title("main")
-    st.markdown("### Navigation")
-    st.page_link("pages/0_🏠_Dashboard.py", label="🏠 Dashboard")
-    st.page_link("pages/1_👤_Profile_&_Preferences.py", label="👤 Profile & Preferences")
-    st.page_link("pages/2_📝_Daily_Survey.py", label="📝 Daily Survey")
-    st.page_link("pages/3_📅_Appointments.py", label="📅 Appointments")
-    st.page_link("pages/4_💬_Messages.py", label="💬 Messages")
-    st.page_link("pages/5_🗳️_Feedback.py", label="🗳️ Feedback")
-    st.page_link("pages/6_🔐_Login_History.py", label="🔐 Login History")
-    st.page_link("pages/7_ℹ️_About.py", label="ℹ️ About")
+apply_theme() 
 page_header("CareLog • Patient Portal", "Login or create your patient account", "🩺")
 
 auth = AuthService()
@@ -87,8 +74,3 @@ with tab_reset:
 
 divider()
 st.caption("Tip: After logging in, use the sidebar Pages to access Profile, Survey, Appointments, Messages, Feedback, and Login History.")
-
-i18n_controls(sidebar=True)
-show_status_badge()
-
-

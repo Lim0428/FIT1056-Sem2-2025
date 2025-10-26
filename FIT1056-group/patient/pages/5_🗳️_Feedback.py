@@ -2,7 +2,7 @@ import streamlit as st
 from components.ui import apply_theme, page_header, card, require_auth
 from app.patient import PatientService
 
-st.set_page_config(page_title="Feedback", page_icon="🗳️", layout="centered")
+st.set_page_config(page_title="Feedback", page_icon="🗳️", layout="wide")
 apply_theme()
 require_auth()
 page_header("Feedback", "Tell us how we are doing", "🗳️")

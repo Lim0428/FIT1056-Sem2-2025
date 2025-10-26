@@ -3,7 +3,8 @@ from datetime import datetime
 import streamlit as st
 from components.ui import apply_theme, page_header, card
 from components.staff_shared import pick_staff_and_patient
-from app.medical_staff import MedicalStaffService
+from app.medical_staff_service import MedicalStaffService
+
 
 st.set_page_config(page_title="Vitals", page_icon="🌡️", layout="wide")
 apply_theme()

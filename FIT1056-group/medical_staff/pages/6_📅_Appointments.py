@@ -8,7 +8,8 @@ import pandas as pd
 
 from components.ui import apply_theme, page_header, card
 from components.staff_shared import pick_staff_and_patient
-from app.medical_staff import MedicalStaffService
+from app.medical_staff_service import MedicalStaffService
+
 from app.storage import read_db, write_db, ensure_db
 
 # ---------------- Page setup ----------------

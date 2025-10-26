@@ -9,7 +9,8 @@ import pandas as pd
 import altair as alt
 
 from components.ui import apply_theme, page_header, card, set_altair_dark_theme
-from app.medical_staff import MedicalStaffService
+from app.medical_staff_service import MedicalStaffService
+
 
 # -------------------------- Pretty attention table --------------------------
 def render_attention_table(

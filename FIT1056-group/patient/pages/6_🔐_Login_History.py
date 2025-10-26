@@ -2,7 +2,7 @@ import streamlit as st
 from components.ui import apply_theme, page_header, card, require_auth
 from app.auth import AuthService
 
-st.set_page_config(page_title="Login History", page_icon="🔐", layout="centered")
+st.set_page_config(page_title="Login History", page_icon="🔐", layout="wide")
 apply_theme()
 require_auth()
 page_header("Login History", "Recent authentication events", "🔐")

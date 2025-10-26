@@ -1,7 +1,7 @@
 import streamlit as st
 from components.ui import apply_theme, page_header, card
 
-st.set_page_config(page_title="About", page_icon="ℹ️", layout="centered")
+st.set_page_config(page_title="About", page_icon="ℹ️", layout="wide")
 apply_theme()
 page_header("About CareLog (Patient)", "Scope and key features", "ℹ️")
 
